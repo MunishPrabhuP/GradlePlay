@@ -1,0 +1,4 @@
+.idea
+.gradle
+e2e-tests/build
+e2e-tests/logs

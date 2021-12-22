@@ -1,0 +1,2 @@
+rootProject.name = 'GradlePlay'
+include 'e2e-tests'
