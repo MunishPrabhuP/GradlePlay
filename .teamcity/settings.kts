@@ -23,13 +23,13 @@ object Cac : BuildType({
 
     params {
         text(
-            "TEST_FILE",
+            "RUN_ONLY",
             "",
-            "TEST_FILE",
-            "File/Package to test",
-            ParameterDisplay.NORMAL,
+            "RUN_ONLY",
+            "To run Single Test : TestNGAnnotation/com.demo.e2e.TestNGAnnotation, To run all the Tests in a package - com.demo.e2e.*",
+            ParameterDisplay.PROMPT,
             readOnly = false,
-            allowEmpty = true
+            allowEmpty = false
         )
         checkbox(
             "RERUN_FAILED_TEST",
@@ -37,10 +37,8 @@ object Cac : BuildType({
             "TEST_FILE",
             "File/Package to test",
             ParameterDisplay.NORMAL,
-            readOnly = false, "true", "false"
+            readOnly = false, "true", "true"
         )
-        param("TEST_FILE", "")
-        param("RERUN_TEST", "true")
     }
     vcs {
         root(DslContext.settingsRoot)
