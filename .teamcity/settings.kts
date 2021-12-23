@@ -23,6 +23,15 @@ object Cac : BuildType({
 
     params {
         text(
+            "BRANCH",
+            "",
+            "BRANCH",
+            "VCS Branch to build",
+            ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = false
+        )
+        text(
             "RUN_ONLY",
             "",
             "RUN_ONLY",
@@ -37,7 +46,7 @@ object Cac : BuildType({
             "RERUN_FAILED_TEST",
             "Enable this to rerun Failed TestCases",
             ParameterDisplay.NORMAL,
-            readOnly = false, "true", "false"
+            readOnly = false
         )
     }
     vcs {
