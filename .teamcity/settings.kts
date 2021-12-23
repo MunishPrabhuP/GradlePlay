@@ -22,11 +22,25 @@ object Cac : BuildType({
     artifactRules = "e2e-tests/build/reports => reports"
 
     params {
-        text("TEST_FILE", "", "TEST_FILE", "File/Package to test", ParameterDisplay.NORMAL, false, true)
-        checkbox(
-            "RERUN_FAILED_TESTCASE", "", "RERUN_FAILED_TESTCASE", "Enabled this to rerun failed test",
-            ParameterDisplay.NORMAL, false, true
+        text(
+            "TEST_FILE",
+            "",
+            "TEST_FILE",
+            "File/Package to test",
+            ParameterDisplay.NORMAL,
+            readOnly = false,
+            allowEmpty = true
         )
+        checkbox(
+            "RERUN_FAILED_TEST",
+            "",
+            "TEST_FILE",
+            "File/Package to test",
+            ParameterDisplay.NORMAL,
+            readOnly = false, "true", "false"
+        )
+        param("TEST_FILE", "")
+        param("RERUN_TEST", "true")
     }
     vcs {
         root(DslContext.settingsRoot)
