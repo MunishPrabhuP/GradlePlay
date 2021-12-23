@@ -33,9 +33,9 @@ object Cac : BuildType({
         )
         checkbox(
             "RERUN_FAILED_TEST",
-            "",
+            "true",
             "RERUN_FAILED_TEST",
-            "Enable this to rerun failed Testcases",
+            "Enable this to rerun Failed TestCases",
             ParameterDisplay.NORMAL,
             readOnly = false, "true", "false"
         )
