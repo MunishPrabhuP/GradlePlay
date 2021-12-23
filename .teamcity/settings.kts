@@ -42,6 +42,7 @@ object Cac : BuildType({
     }
     triggers {
         vcs {
+            branchFilter = "+:master"
         }
     }
 })
