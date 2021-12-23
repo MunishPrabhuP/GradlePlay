@@ -34,10 +34,10 @@ object Cac : BuildType({
         checkbox(
             "RERUN_FAILED_TEST",
             "",
-            "TEST_FILE",
-            "File/Package to test",
+            "RERUN_FAILED_TEST",
+            "Enable this to rerun failed Testcases",
             ParameterDisplay.NORMAL,
-            readOnly = false, "true", "true"
+            readOnly = false, "true", "false"
         )
     }
     vcs {
