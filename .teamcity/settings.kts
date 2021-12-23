@@ -1,11 +1,8 @@
-import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
-import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
+import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
-import jetbrains.buildServer.configs.kotlin.v2019_2.project
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
-import jetbrains.buildServer.configs.kotlin.v2019_2.version
 
 version = "2021.2"
 
@@ -24,6 +21,13 @@ object Cac : BuildType({
     name = "GradlePlay CAC Test"
     artifactRules = "e2e-tests/build/reports => reports"
 
+    params {
+        text("TEST_FILE", "", "TEST_FILE", "File/Package to test", ParameterDisplay.NORMAL, false, true)
+        checkbox(
+            "RERUN_FAILED_TESTCASE", "", "RERUN_FAILED_TESTCASE", "Enabled this to rerun failed test",
+            ParameterDisplay.NORMAL, false, true
+        )
+    }
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
