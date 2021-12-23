@@ -37,7 +37,7 @@ object Cac : BuildType({
         }
         script {
             name = "Say GoodBye"
-            scriptContent = "echo 'Say GoodBye to Munishma'"
+            scriptContent = "echo 'Say GoodBye to Munish Prabhu'"
         }
     }
     triggers {
