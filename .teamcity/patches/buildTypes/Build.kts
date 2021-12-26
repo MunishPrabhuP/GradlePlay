@@ -15,10 +15,6 @@ create(DslContext.projectId, BuildType({
     name = "Build"
     paused = true
 
-    vcs {
-        root(RelativeId("HttpsGithubComMunishPrabhuPGradlePlayGitEnvUser"))
-    }
-
     triggers {
         vcs {
         }
