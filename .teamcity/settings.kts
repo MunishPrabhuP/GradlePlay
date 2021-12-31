@@ -39,7 +39,7 @@ object CustomTestRunner : BuildType({
 
     steps {
         gradle {
-            tasks = "clean test --tests com.demo.e2e.TestNGAnnotation"
+            tasks = "clean test --tests com.demo.e2e.SampleE2ETests"
             buildFile = "e2e-tests/build.gradle"
         }
     }
