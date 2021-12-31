@@ -12,6 +12,13 @@ To apply the patch, change the buildType with id = 'Cac'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("Cac")) {
+    params {
+        add {
+            select("TEST_TYPE", "",
+                    options = listOf("E2E-TESTS", "API-TESTS"))
+        }
+    }
+
     expectSteps {
         gradle {
             name = "Execute Tests"
