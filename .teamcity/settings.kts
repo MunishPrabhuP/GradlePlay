@@ -1,5 +1,8 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.CustomChart
+import jetbrains.buildServer.configs.kotlin.v2019_2.CustomChart.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.v2019_2.projectCustomChart
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -28,6 +31,18 @@ version = "2021.2"
 project {
 
     buildType(CustomTestRunner)
+
+    features {
+        projectCustomChart {
+            id = "PROJECT_EXT_5"
+            title = "New chart title"
+            seriesTitle = "Serie"
+            format = CustomChart.Format.PERCENT
+            series = listOf(
+                Serie(title = "Test Status", key = SeriesKey("BuildTestStatus"), sourceBuildTypeId = "AppDGradlePlay_CustomTestRunner")
+            )
+        }
+    }
 }
 
 object CustomTestRunner : BuildType({
