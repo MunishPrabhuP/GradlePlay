@@ -16,10 +16,6 @@ changeBuildType(RelativeId("Cac")) {
         remove {
             checkbox("RERUN_FAILED_TEST", "true", label = "RERUN_FAILED_TEST", description = "Enable this to rerun Failed TestCases")
         }
-        add {
-            select("TEST_TYPE", "",
-                    options = listOf("E2E-TESTS", "API-TESTS"))
-        }
     }
 
     expectSteps {
