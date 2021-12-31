@@ -4,24 +4,24 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class TestNGAnnotation {
+public class SampleE2ETests {
     @BeforeClass
     public void setUp() {
-        System.out.println("In SetUp");
+        System.out.println("E2E Tests In SetUp");
     }
 
     @Test
     public void testcase1() {
-        System.out.println("In Test Case 1");
+        System.out.println("E2E Tests In Test Case 1");
     }
 
     @Test
     public void testcase2() {
-        System.out.println("In Test Case 2");
+        System.out.println("E2E Tests In Test Case 2");
     }
 
     @AfterClass
     public void tearDown() {
-        System.out.println("In Tear Down");
+        System.out.println("E2E Tests In Tear Down");
     }
 }

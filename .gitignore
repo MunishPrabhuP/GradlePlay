@@ -2,3 +2,5 @@
 .gradle
 e2e-tests/build
 e2e-tests/logs
+api-tests/build
+api-tests/logs
