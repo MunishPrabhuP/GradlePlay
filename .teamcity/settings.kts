@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 /*
@@ -27,7 +28,19 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2021.2"
 
 project {
+    buildType(HealthCheck)
+    buildType(E2ETests)
+    buildType(APITests)
     buildType(CustomTestRunner)
+
+    sequential {
+        buildType(HealthCheck)
+        parallel {
+            buildType(E2ETests)
+            buildType(APITests)
+        }
+        buildType(CustomTestRunner)
+    }
 }
 
 object CustomTestRunner : BuildType({
@@ -36,39 +49,66 @@ object CustomTestRunner : BuildType({
     vcs {
         root(DslContext.settingsRoot)
     }
-    params {
-        text(
-            "RUN_ONLY",
-            value = "",
-            label = "RUN_ONLY",
-            description = "To run Single Test : TestNGAnnotation/com.demo.e2e.SampleE2ETests, To run all the Tests in a package - com.demo.e2e.*",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = false
-        )
-        select(
-            name = "TEST_TYPE",
-            value = "",
-            label = "TEST_TYPE",
-            description = "Type of running Test(s)",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowMultiple = false,
-            options = listOf("E2E-TESTS", "API-TESTS")
-        )
-    }
 
     steps {
-        gradle {
-            name = "Execute"
-            tasks = "clean test --tests com.demo.e2e.SampleE2ETests"
-            buildFile = "e2e-tests/build.gradle"
+        script {
+            scriptContent = "echo 'Happy New Year'"
         }
     }
 
     triggers {
         vcs {
-            branchFilter = "+:master"
+
         }
     }
 })
+
+object APITests : BuildType({
+    name = "API Tests"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        gradle {
+            name = "Execute API Tests"
+            tasks = "clean test --tests com.demo.e2e.SampleAPITests"
+            buildFile = "api-tests/build.gradle"
+        }
+    }
+})
+
+object E2ETests : BuildType({
+    name = "E2E Tests"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        gradle {
+            name = "Execute E2E Tests"
+            tasks = "clean test --tests com.demo.e2e.SampleE2ETests"
+            buildFile = "e2e-tests/build.gradle"
+        }
+    }
+})
+
+object HealthCheck : BuildType({
+    name = "Health Check"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        gradle {
+            name = "Execute Health Check(s)"
+            tasks = "clean test --tests com.demo.e2e.HealthCheck"
+            buildFile = "build.gradle"
+        }
+    }
+})
+
+
