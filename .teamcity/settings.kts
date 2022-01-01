@@ -49,7 +49,7 @@ object APITests : BuildType({
     }
     dependencies {
         snapshot(HealthCheck) {
-            onDependencyFailure = FailureAction.CANCEL
+            onDependencyFailure = FailureAction.FAIL_TO_START
         }
     }
     steps {
@@ -69,7 +69,7 @@ object E2ETests : BuildType({
     }
     dependencies {
         snapshot(HealthCheck) {
-            onDependencyFailure = FailureAction.CANCEL
+            onDependencyFailure = FailureAction.FAIL_TO_START
         }
     }
     steps {
