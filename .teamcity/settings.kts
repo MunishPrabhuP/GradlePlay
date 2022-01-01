@@ -33,7 +33,10 @@ project {
 object CustomTestRunner : BuildType({
     name = "Custom Test Runner"
 
-    artifactRules = "e2e-tests/build/reports => reports"
+    artifactRules = """
+        e2e-tests/build/reports => reports
+        api-tests/build/reports => reports
+    """.trimIndent()
 
     vcs {
         root(DslContext.settingsRoot)
