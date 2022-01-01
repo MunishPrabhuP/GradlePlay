@@ -91,8 +91,7 @@ object HealthCheck : BuildType({
     steps {
         gradle {
             name = "Execute Health Check(s)"
-            tasks = "clean test --tests com.demo.e2e.HealthCheck"
-            buildFile = "build.gradle"
+            tasks = "clean test --tests HealthCheck"
         }
     }
 })
