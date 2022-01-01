@@ -51,7 +51,7 @@ object CustomTestRunner : BuildType({
             value = "",
             label = "TEST_TYPE",
             description = "Type of running Test(s)",
-            display = ParameterDisplay.NORMAL,
+            display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowMultiple = false,
             options = listOf("E2E-TESTS", "API-TESTS")
