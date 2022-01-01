@@ -48,6 +48,7 @@ object CustomTestRunner : BuildType({
 
     triggers {
         vcs {
+            branchFilter = "+:master"
         }
     }
 })
