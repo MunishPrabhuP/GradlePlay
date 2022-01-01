@@ -74,11 +74,7 @@ object CustomTestRunner : BuildType({
 
     triggers {
         vcs {
-            branchFilter = "master"
-            perCheckinTriggering = true
-            enableQueueOptimization = false
-
-            enforceCleanCheckout = true
+            branchFilter = "+:master"
         }
     }
 })
