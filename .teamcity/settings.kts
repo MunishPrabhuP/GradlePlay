@@ -37,6 +37,8 @@ object CustomTestRunner : BuildType({
 
     vcs {
         root(DslContext.settingsRoot)
+
+        cleanCheckout = true
     }
 
     steps {
