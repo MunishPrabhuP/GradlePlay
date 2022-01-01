@@ -38,7 +38,27 @@ object CustomTestRunner : BuildType({
         e2e-tests/build/reports => reports
         api-tests/build/reports => reports
     """.trimIndent()
-
+    params {
+        text(
+            "RUN_ONLY",
+            value = "",
+            label = "RUN_ONLY",
+            description = "To run Single Test : TestNGAnnotation/com.demo.e2e.TestNGAnnotation, To run all the Tests in a package - com.demo.e2e.*",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = false
+        )
+        select(
+            name = "TEST_TYPE",
+            value = "",
+            label = "TEST_TYPE",
+            description = "Type of Test(s)",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowMultiple = false,
+            options = listOf("E2E-TESTS", "API-TESTS")
+        )
+    }
     vcs {
         root(DslContext.settingsRoot)
 
