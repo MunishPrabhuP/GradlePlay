@@ -27,7 +27,6 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2021.2"
 
 project {
-
     buildType(CustomTestRunner)
 }
 
@@ -36,6 +35,27 @@ object CustomTestRunner : BuildType({
 
     vcs {
         root(DslContext.settingsRoot)
+    }
+    params {
+        text(
+            "RUN_ONLY",
+            value = "",
+            label = "RUN_ONLY",
+            description = "To run Single Test : TestNGAnnotation/com.demo.e2e.SampleE2ETests, To run all the Tests in a package - com.demo.e2e.*",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = false
+        )
+        select(
+            name = "TEST_TYPE",
+            value = "",
+            label = "TEST_TYPE",
+            description = "Type of running Test(s)",
+            display = ParameterDisplay.NORMAL,
+            readOnly = false,
+            allowMultiple = false,
+            options = listOf("E2E-TESTS", "API-TESTS")
+        )
     }
 
     steps {
