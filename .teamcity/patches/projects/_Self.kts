@@ -26,5 +26,12 @@ changeProject(DslContext.projectId) {
                 startPage = "reports/tests/test/index.html"
             }
         }
+        add {
+            buildReportTab {
+                id = "PROJECT_EXT_4"
+                title = "HealthCheck Report"
+                startPage = "reports/tests/test/index.html"
+            }
+        }
     }
 }
