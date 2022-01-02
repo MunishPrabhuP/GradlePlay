@@ -43,6 +43,7 @@ object CustomTestRunner : BuildType({
 
 object APITests : BuildType({
     name = "API Tests"
+    artifactRules = "api-tests/build/reports/ => reports/"
 
     vcs {
         root(DslContext.settingsRoot)
@@ -63,6 +64,7 @@ object APITests : BuildType({
 
 object E2ETests : BuildType({
     name = "E2E Tests"
+    artifactRules = "e2e-tests/build/reports/ => reports/"
 
     vcs {
         root(DslContext.settingsRoot)
@@ -83,6 +85,7 @@ object E2ETests : BuildType({
 
 object HealthCheck : BuildType({
     name = "Health Check"
+    artifactRules = "library/build/reports/ => reports/"
 
     vcs {
         root(DslContext.settingsRoot)
