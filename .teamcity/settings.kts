@@ -1,10 +1,9 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
-import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
-import jetbrains.buildServer.configs.kotlin.v2019_2.Project
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.buildReportTab
-import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2019_2.ui.add
 
 version = "2021.2"
 
@@ -19,21 +18,21 @@ project {
             buildReportTab {
                 id = "PROJECT_EXT_2"
                 title = "API Report"
-                startPage = "reports/tests/test/index.html"
+                startPage = "api-tests/reports/tests/test/index.html"
             }
         }
         add {
             buildReportTab {
                 id = "PROJECT_EXT_3"
                 title = "E2E Report"
-                startPage = "reports/tests/test/index.html"
+                startPage = "e2e-tests/reports/tests/test/index.html"
             }
         }
         add {
             buildReportTab {
                 id = "PROJECT_EXT_4"
                 title = "HealthCheck Report"
-                startPage = "reports/tests/test/index.html"
+                startPage = "health-check/reports/tests/test/index.html"
             }
         }
     }
@@ -69,7 +68,7 @@ object CustomTestRunner : BuildType({
 
 object APITests : BuildType({
     name = "API Tests"
-    artifactRules = "api-tests/build/reports/ => reports/"
+    artifactRules = "api-tests/build/reports/ => api-tests/reports/"
 
     vcs {
         root(DslContext.settingsRoot)
@@ -90,7 +89,7 @@ object APITests : BuildType({
 
 object E2ETests : BuildType({
     name = "E2E Tests"
-    artifactRules = "e2e-tests/build/reports/ => reports/"
+    artifactRules = "e2e-tests/build/reports/ => e2e-tests/reports/"
 
     vcs {
         root(DslContext.settingsRoot)
@@ -111,7 +110,7 @@ object E2ETests : BuildType({
 
 object HealthCheck : BuildType({
     name = "Health Check"
-    artifactRules = "library/build/reports/ => reports/"
+    artifactRules = "library/build/reports/ => health-check/reports/"
 
     vcs {
         root(DslContext.settingsRoot)
