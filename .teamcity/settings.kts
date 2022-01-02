@@ -51,6 +51,7 @@ object CustomTestRunner : BuildType({
 
     vcs {
         root(DslContext.settingsRoot)
+        cleanCheckout = true
     }
 
     steps {
@@ -72,6 +73,7 @@ object APITests : BuildType({
 
     vcs {
         root(DslContext.settingsRoot)
+        cleanCheckout = true
     }
     dependencies {
         snapshot(HealthCheck) {
@@ -93,6 +95,7 @@ object E2ETests : BuildType({
 
     vcs {
         root(DslContext.settingsRoot)
+        cleanCheckout = true
     }
     dependencies {
         snapshot(HealthCheck) {
@@ -114,6 +117,7 @@ object HealthCheck : BuildType({
 
     vcs {
         root(DslContext.settingsRoot)
+        cleanCheckout = true
     }
 
     steps {
