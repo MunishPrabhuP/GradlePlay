@@ -19,5 +19,12 @@ changeProject(DslContext.projectId) {
                 startPage = "reports/tests/test/index.html"
             }
         }
+        add {
+            buildReportTab {
+                id = "PROJECT_EXT_3"
+                title = "E2E Report"
+                startPage = "reports/tests/test/index.html"
+            }
+        }
     }
 }
