@@ -2,6 +2,9 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2019_2.Project
+import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.buildReportTab
+import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
 version = "2021.2"
 
@@ -11,6 +14,29 @@ project {
     buildType(APITests)
     buildType(CustomTestRunner)
 
+    features {
+        add {
+            buildReportTab {
+                id = "PROJECT_EXT_2"
+                title = "API Report"
+                startPage = "reports/tests/test/index.html"
+            }
+        }
+        add {
+            buildReportTab {
+                id = "PROJECT_EXT_3"
+                title = "E2E Report"
+                startPage = "reports/tests/test/index.html"
+            }
+        }
+        add {
+            buildReportTab {
+                id = "PROJECT_EXT_4"
+                title = "HealthCheck Report"
+                startPage = "reports/tests/test/index.html"
+            }
+        }
+    }
     sequential {
         buildType(HealthCheck)
         parallel {
