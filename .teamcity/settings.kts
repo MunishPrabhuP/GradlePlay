@@ -78,7 +78,7 @@ object APITests : BuildType({
     }
     steps {
         gradle {
-            name = "Execute API Tests"
+            name = "Execute API Test(s)"
             tasks = "clean test --tests com.demo.e2e.SampleAPITests"
             buildFile = "api-tests/build.gradle"
         }
@@ -100,7 +100,7 @@ object E2ETests : BuildType({
     }
     steps {
         gradle {
-            name = "Execute E2E Tests"
+            name = "Execute E2E Test(s)"
             tasks = "clean test --tests com.demo.e2e.SampleE2ETests"
             buildFile = "e2e-tests/build.gradle"
         }
@@ -114,25 +114,65 @@ object CustomTestRunner : BuildType({
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
-
+    params {
+        text(
+            name = "BRANCH",
+            value = "",
+            label = "BRANCH",
+            description = "SCM/VCS Branch",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = false
+        )
+        text(
+            name = "RUN_ONLY",
+            value = "",
+            label = "RUN_ONLY",
+            description = "To run Single Test : SampleE2ETests/com.demo.e2e.SampleE2ETests, To run all the Tests in a package - com.demo.e2e.*",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = false
+        )
+        select(
+            name = "TEST_TYPE",
+            value = "",
+            label = "TEST_TYPE",
+            description = "Type of Test(s)",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowMultiple = false,
+            options = listOf("E2E-TESTS", "API-TESTS")
+        )
+    }
     steps {
         script {
             scriptContent = "git fetch"
         }
         script {
-            scriptContent = "git branch"
-        }
-        script {
-            scriptContent = "git checkout pr-1"
+            scriptContent = "git checkout %BRANCH%"
         }
         script {
             scriptContent = "git branch"
         }
+//        gradle {
+//            name = "Execute Test(s)"
+//            tasks = getTestBuildFileLocation("%TEST_TYPE%")
+//            buildFile = "library/build.gradle"
+//        }
     }
-
     triggers {
         vcs {
-
+            
         }
     }
 })
+
+fun getTestBuildFileLocation(testType: String): String {
+    return when (testType) {
+        "E2E-TESTS" -> "e2e-tests/build.gradle"
+        "API-TESTS" -> "api-tests/build.gradle"
+        else -> {
+            "build.gradle"
+        }
+    }
+}
