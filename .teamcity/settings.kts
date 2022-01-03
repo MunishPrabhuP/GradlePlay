@@ -155,9 +155,10 @@ object CustomTestRunner : BuildType({
         gradle {
             name = "Execute Test(s)"
             tasks = "clean test --tests %RUN_ONLY%"
-            when ("%TEST_TYPE%") {
-                "E2E-TESTS" -> buildFile = "e2e-tests/build.gradle"
-                "API-TESTS" -> buildFile = "api-tests/build.gradle"
+            if ("%TEST_TYPE%" == "E2E-TESTS") {
+                buildFile = "e2e-tests/build.gradle"
+            } else if ("%TEST_TYPE%" == "API-TESTS") {
+                buildFile = "api-tests/build.gradle"
             }
         }
     }
