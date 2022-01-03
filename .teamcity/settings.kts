@@ -56,7 +56,7 @@ object CustomTestRunner : BuildType({
 
     steps {
         script {
-            scriptContent = "git branch"
+            scriptContent = "git fetch"
         }
         script {
             scriptContent = "git checkout pr-1"
