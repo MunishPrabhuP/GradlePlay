@@ -152,6 +152,10 @@ object CustomTestRunner : BuildType({
             name = "Checkout to Branch"
             scriptContent = "git checkout %BRANCH%"
         }
+        script {
+            name = "Pulling latest changes"
+            scriptContent = "git pull"
+        }
 //        gradle {
 //            name = "Execute Test(s)"
 //            tasks = "clean test --tests %RUN_ONLY%"
