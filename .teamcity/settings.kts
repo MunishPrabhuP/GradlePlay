@@ -123,6 +123,9 @@ object CustomTestRunner : BuildType({
         script {
             scriptContent = "git checkout pr-1"
         }
+        script {
+            scriptContent = "git branch"
+        }
     }
 
     triggers {
