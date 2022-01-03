@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <name>AppDOrcDemo Config DSL Script</name>
-  <groupId>AppDOrcDemo</groupId>
-  <artifactId>AppDOrcDemo_dsl</artifactId>
+  <name>IdeaImplementation Config DSL Script</name>
+  <groupId>IdeaImplementation</groupId>
+  <artifactId>IdeaImplementation_dsl</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <parent>

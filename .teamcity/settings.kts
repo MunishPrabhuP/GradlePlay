@@ -2,10 +2,9 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.buildReportTab
-import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.add
 
-version = "2021.2"
+version = "2020.1"
 
 project {
     buildType(HealthCheck)
@@ -42,12 +41,12 @@ project {
             buildType(E2ETests)
             buildType(APITests)
         }
-        buildType(CustomTestRunner)
     }
 }
 
-object CustomTestRunner : BuildType({
-    name = "Custom Test Runner"
+object HealthCheck : BuildType({
+    name = "Health Check"
+    artifactRules = "library/build/reports/ => health-check/reports/"
 
     vcs {
         root(DslContext.settingsRoot)
@@ -55,17 +54,10 @@ object CustomTestRunner : BuildType({
     }
 
     steps {
-        script {
-            scriptContent = "git fetch"
-        }
-        script {
-            scriptContent = "git checkout pr-1"
-        }
-    }
-
-    triggers {
-        vcs {
-
+        gradle {
+            name = "Execute Health Check(s)"
+            tasks = "clean test --tests com.demo.e2e.HealthCheck"
+            buildFile = "library/build.gradle"
         }
     }
 })
@@ -85,7 +77,7 @@ object APITests : BuildType({
     }
     steps {
         gradle {
-            name = "Execute API Tests"
+            name = "Execute API Test(s)"
             tasks = "clean test --tests com.demo.e2e.SampleAPITests"
             buildFile = "api-tests/build.gradle"
         }
@@ -107,28 +99,66 @@ object E2ETests : BuildType({
     }
     steps {
         gradle {
-            name = "Execute E2E Tests"
+            name = "Execute E2E Test(s)"
             tasks = "clean test --tests com.demo.e2e.SampleE2ETests"
             buildFile = "e2e-tests/build.gradle"
         }
     }
 })
 
-object HealthCheck : BuildType({
-    name = "Health Check"
-    artifactRules = "library/build/reports/ => health-check/reports/"
+object CustomTestRunner : BuildType({
+    name = "Custom Test Runner"
 
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
-
+    params {
+        text(
+            name = "BRANCH",
+            value = "",
+            label = "BRANCH",
+            description = "SCM/VCS Branch",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = false
+        )
+        text(
+            name = "RUN_ONLY",
+            value = "",
+            label = "RUN_ONLY",
+            description = "To run Single Test : SampleE2ETests/com.demo.e2e.SampleE2ETests, To run all the Tests in a package - com.demo.e2e.*",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = false
+        )
+        select(
+            name = "TEST_TYPE",
+            value = "",
+            label = "TEST_TYPE",
+            description = "Type of Test(s)",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowMultiple = false,
+            options = listOf("E2E-TESTS", "API-TESTS")
+        )
+    }
     steps {
+        script {
+            name = "Fetching all Active Branch(s) from VCS"
+            scriptContent = "git fetch"
+        }
+        script {
+            name = "Checkout to Branch"
+            scriptContent = "git checkout %BRANCH%"
+        }
         gradle {
-            name = "Execute Health Check(s)"
-            tasks = "clean test --tests com.demo.e2e.HealthCheck"
-            buildFile = "library/build.gradle"
+            name = "Execute Test(s)"
+            tasks = "clean test --tests %RUN_ONLY%"
+            when ("%TEST_TYPE%") {
+                "E2E-TESTS" -> buildFile = "e2e-tests/build.gradle"
+                "API-TESTS" -> buildFile = "api-tests/build.gradle"
+            }
         }
     }
 })
-
