@@ -56,7 +56,10 @@ object CustomTestRunner : BuildType({
 
     steps {
         script {
-            scriptContent = "echo 'Happy New Year'"
+            scriptContent = "git checkout pr-1"
+        }
+        script {
+            scriptContent = "git branch"
         }
     }
 
