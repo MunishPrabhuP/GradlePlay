@@ -152,14 +152,25 @@ object CustomTestRunner : BuildType({
             name = "Checkout to Branch"
             scriptContent = "git checkout %BRANCH%"
         }
-        gradle {
-            name = "Execute Test(s)"
-            tasks = "clean test --tests %RUN_ONLY%"
-            if ("%TEST_TYPE%" == "E2E-TESTS") {
-                buildFile = "e2e-tests/build.gradle"
-            } else if ("%TEST_TYPE%" == "API-TESTS") {
-                buildFile = "api-tests/build.gradle"
-            }
+//        gradle {
+//            name = "Execute Test(s)"
+//            tasks = "clean test --tests %RUN_ONLY%"
+//            buildFile = Utils().getTestsBuildFileLocation("%TEST_TYPE%")
+//        }
+        script {
+            scriptContent = "echo " + Utils().getTestsBuildFileLocation("%TEST_TYPE%")
         }
     }
 })
+
+class Utils {
+    fun getTestsBuildFileLocation(testType: String): String {
+        return when (testType) {
+            "E2E-TESTS" -> "e2e-tests/build.gradle"
+            "API-TESTS" -> "api-tests/build.gradle"
+            else -> { // Note the block
+                "build.gradle"
+            }
+        }
+    }
+}
