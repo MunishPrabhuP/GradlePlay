@@ -2,7 +2,6 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.buildReportTab
-import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.add
 
 version = "2020.1"
@@ -146,33 +145,20 @@ object CustomTestRunner : BuildType({
     }
     steps {
         script {
+            name = "Fetching all Active Branch(s) from VCS"
             scriptContent = "git fetch"
         }
         script {
+            name = "Checkout to Branch"
             scriptContent = "git checkout %BRANCH%"
         }
-        script {
-            scriptContent = "git branch"
-        }
-//        gradle {
-//            name = "Execute Test(s)"
-//            tasks = getTestBuildFileLocation("%TEST_TYPE%")
-//            buildFile = "library/build.gradle"
-//        }
-    }
-    triggers {
-        vcs {
-            
+        gradle {
+            name = "Execute Test(s)"
+            tasks = "clean test --tests %RUN_ONLY%"
+            when ("%TEST_TYPE%") {
+                "E2E-TESTS" -> buildFile = "e2e-tests/build.gradle"
+                "API-TESTS" -> buildFile = "api-tests/build.gradle"
+            }
         }
     }
 })
-
-fun getTestBuildFileLocation(testType: String): String {
-    return when (testType) {
-        "E2E-TESTS" -> "e2e-tests/build.gradle"
-        "API-TESTS" -> "api-tests/build.gradle"
-        else -> {
-            "build.gradle"
-        }
-    }
-}
