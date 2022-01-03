@@ -42,7 +42,6 @@ project {
             buildType(E2ETests)
             buildType(APITests)
         }
-        buildType(CustomTestRunner)
     }
 }
 
