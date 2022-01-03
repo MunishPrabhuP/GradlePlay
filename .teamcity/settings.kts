@@ -1,5 +1,8 @@
-import jetbrains.buildServer.configs.kotlin.v2019_2.*
-import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.v2019_2.project
+import jetbrains.buildServer.configs.kotlin.v2019_2.version
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -32,13 +35,18 @@ project {
 
 object HealthCheck : BuildType({
     name = "Health Check"
+    artifactRules = "library/build/reports/ => health-check/reports/"
 
     vcs {
         root(DslContext.settingsRoot)
+        cleanCheckout = true
     }
 
-    triggers {
-        vcs {
+    steps {
+        gradle {
+            name = "Execute Health Check(s)"
+            tasks = "clean test --tests com.demo.e2e.HealthCheck"
+            buildFile = "library/build.gradle"
         }
     }
 })
