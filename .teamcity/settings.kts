@@ -10,6 +10,7 @@ project {
     buildType(HealthCheck)
     buildType(E2ETests)
     buildType(APITests)
+    buildType(Release)
     buildType(CustomTestRunner)
 
     features {
@@ -41,6 +42,7 @@ project {
             buildType(E2ETests)
             buildType(APITests)
         }
+        buildType(Release)
     }
 }
 
@@ -102,6 +104,21 @@ object E2ETests : BuildType({
             name = "Execute E2E Test(s)"
             tasks = "clean test --tests com.demo.e2e.SampleE2ETests"
             buildFile = "e2e-tests/build.gradle"
+        }
+    }
+})
+
+object Release : BuildType({
+    name = "Release"
+
+    vcs {
+        root(DslContext.settingsRoot)
+        cleanCheckout = true
+    }
+
+    steps {
+        script {
+            scriptContent = "echo Good Bye"
         }
     }
 })
