@@ -10,7 +10,7 @@ project {
     buildType(HealthCheck)
     buildType(E2ETests)
     buildType(APITests)
-    buildType(Release)
+    buildType(LevitateRelease)
     buildType(CustomTestRunner)
 
     features {
@@ -42,7 +42,7 @@ project {
             buildType(E2ETests)
             buildType(APITests)
         }
-        buildType(Release)
+        buildType(LevitateRelease)
     }
 }
 
@@ -108,17 +108,24 @@ object E2ETests : BuildType({
     }
 })
 
-object Release : BuildType({
-    name = "Release"
+object LevitateRelease : BuildType({
+    name = "Levitate Release"
 
-//    vcs {
-//        root(DslContext.settingsRoot)
-//        cleanCheckout = true
-//    }
-
+    params {
+        select(
+            name = "TEST_PHASE",
+            value = "",
+            label = "TEST_PHASE",
+            description = "Required Test Phase",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowMultiple = false,
+            options = listOf("Comprehensive", "Sanity")
+        )
+    }
     steps {
         script {
-            scriptContent = "echo Good Bye"
+            scriptContent = "echo Starting Test Phase -> %TEST_PHASE%"
         }
     }
 })
