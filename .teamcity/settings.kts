@@ -111,10 +111,10 @@ object E2ETests : BuildType({
 object Release : BuildType({
     name = "Release"
 
-    vcs {
-        root(DslContext.settingsRoot)
-        cleanCheckout = true
-    }
+//    vcs {
+//        root(DslContext.settingsRoot)
+//        cleanCheckout = true
+//    }
 
     steps {
         script {
