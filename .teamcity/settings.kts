@@ -42,7 +42,7 @@ project {
             buildType(E2ETests)
             buildType(APITests)
         }
-//        buildType(LevitateRelease)
+        buildType(LevitateRelease)
     }
 }
 
@@ -100,6 +100,9 @@ object E2ETests : BuildType({
         }
     }
     steps {
+        script {
+            scriptContent = "echo %dep.LevitateRelease.TEST_PHASE%"
+        }
         gradle {
             name = "Execute E2E Test(s)"
             tasks = "clean test --tests com.demo.e2e.SampleE2ETests"
