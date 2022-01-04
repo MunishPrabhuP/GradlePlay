@@ -42,7 +42,7 @@ project {
             buildType(E2ETests)
             buildType(APITests)
         }
-        buildType(LevitateRelease)
+//        buildType(LevitateRelease)
     }
 }
 
@@ -125,7 +125,7 @@ object LevitateRelease : BuildType({
     }
     steps {
         script {
-            scriptContent = "echo Starting Test Phase -> %TEST_PHASE%"
+            scriptContent = "echo %TEST_PHASE%"
         }
     }
 })
