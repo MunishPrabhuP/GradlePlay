@@ -13,14 +13,6 @@ project {
     buildType(LevitateRelease)
     buildType(CustomTestRunner)
 
-    params {
-        add {
-            select(
-                "env.TEST_PHASE", "", label = "TEST_PHASE", display = ParameterDisplay.PROMPT,
-                options = listOf("Comprehensive", "Sanity")
-            )
-        }
-    }
     features {
         add {
             buildReportTab {
@@ -109,7 +101,7 @@ object E2ETests : BuildType({
     }
     steps {
         script {
-            scriptContent = "echo %env.TEST_PHASE%"
+            scriptContent = "echo %dep.LevitateRelease.TEST_PHASE%"
         }
         gradle {
             name = "Execute E2E Test(s)"
@@ -122,14 +114,21 @@ object E2ETests : BuildType({
 object LevitateRelease : BuildType({
     name = "Levitate Release"
 
-    vcs {
-        root(DslContext.settingsRoot)
-        cleanCheckout = true
+    params {
+        select(
+            name = "TEST_PHASE",
+            value = "",
+            label = "TEST_PHASE",
+            description = "Required Test Phase",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowMultiple = false,
+            options = listOf("Comprehensive", "Sanity")
+        )
     }
     steps {
         script {
-//            scriptContent = "echo ##teamcity[setParameter name='env.TEST_PHASE' value='%TEST_PHASE%']"
-            scriptContent = "echo %env.TEST_PHASE%"
+            scriptContent = "echo ##teamcity[setParameter name='env.TEST_PHASE' value='%TEST_PHASE%']"
         }
     }
 })
