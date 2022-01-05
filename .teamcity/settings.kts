@@ -100,12 +100,12 @@ object E2ETests : BuildType({
         }
     }
     steps {
-        script {
-            scriptContent = "echo %env.TEST_PHASE%"
-        }
+//        script {
+//            scriptContent = "echo %env.TEST_PHASE%"
+//        }
         gradle {
             name = "Execute E2E Test(s)"
-            tasks = "clean test --tests com.demo.e2e.SampleE2ETests"
+            tasks = "clean test --tests com.demo.e2e.SampleE2ETests -Dtype=%env.TEST_PHASE%"
             buildFile = "e2e-tests/build.gradle"
         }
     }
