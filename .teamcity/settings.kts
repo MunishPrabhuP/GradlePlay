@@ -105,7 +105,7 @@ object E2ETests : BuildType({
 //        }
         gradle {
             name = "Execute E2E Test(s)"
-            tasks = "clean test --tests com.demo.e2e.SampleE2ETests -Dtype=%env.TEST_PHASE%"
+            tasks = "clean test --tests com.demo.e2e.SampleE2ETests -Dtype=%dep.LevitateRelease.env.TEST_PHASE%"
             buildFile = "e2e-tests/build.gradle"
         }
     }
