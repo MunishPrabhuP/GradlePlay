@@ -14,16 +14,12 @@ project {
     buildType(CustomTestRunner)
 
     params {
-        select(
-            name = "TEST_PHASE",
-            value = "",
-            label = "TEST_PHASE",
-            description = "Required Test Phase",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowMultiple = false,
-            options = listOf("Comprehensive", "Sanity")
-        )
+        add {
+            select(
+                "env.TEST_PHASE", "", label = "TEST_PHASE", display = ParameterDisplay.PROMPT,
+                options = listOf("Comprehensive", "Sanity")
+            )
+        }
     }
     features {
         add {
