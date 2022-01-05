@@ -15,5 +15,9 @@ changeProject(DslContext.projectId) {
             select("TEST_PHASE", "", label = "TEST_PHASE", description = "Required Test Phase", display = ParameterDisplay.PROMPT,
                     options = listOf("Comprehensive", "Sanity"))
         }
+        add {
+            select("env.TEST_PHASE", "", label = "TEST_PHASE", display = ParameterDisplay.PROMPT,
+                    options = listOf("Comprehensive", "Sanity"))
+        }
     }
 }
