@@ -109,7 +109,7 @@ object E2ETests : BuildType({
     }
     steps {
         script {
-            scriptContent = "echo %TEST_PHASE%"
+            scriptContent = "echo %env.TEST_PHASE%"
         }
         gradle {
             name = "Execute E2E Test(s)"
@@ -129,7 +129,7 @@ object LevitateRelease : BuildType({
     steps {
         script {
 //            scriptContent = "echo ##teamcity[setParameter name='env.TEST_PHASE' value='%TEST_PHASE%']"
-            scriptContent = "echo %TEST_PHASE%"
+            scriptContent = "echo %env.TEST_PHASE%"
         }
     }
 })
