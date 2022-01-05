@@ -101,7 +101,7 @@ object E2ETests : BuildType({
     }
     steps {
         script {
-            scriptContent = "echo %dep.LevitateRelease.TEST_PHASE%"
+            scriptContent = "echo %dep.LevitateRelease.env.TEST_PHASE%"
         }
         gradle {
             name = "Execute E2E Test(s)"
