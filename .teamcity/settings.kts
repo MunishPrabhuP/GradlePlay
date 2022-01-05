@@ -100,12 +100,12 @@ object E2ETests : BuildType({
         }
     }
     steps {
-//        script {
-//            scriptContent = "echo %env.TEST_PHASE%"
-//        }
+        script {
+            scriptContent = "echo %env.TEST_PHASE%"
+        }
         gradle {
             name = "Execute E2E Test(s)"
-            tasks = "clean test --tests com.demo.e2e.SampleE2ETests -Dtype=%dep.LevitateRelease.env.TEST_PHASE%"
+            tasks = "clean test --tests com.demo.e2e.SampleE2ETests"
             buildFile = "e2e-tests/build.gradle"
         }
     }
@@ -113,7 +113,11 @@ object E2ETests : BuildType({
 
 object LevitateRelease : BuildType({
     name = "Levitate Release"
-    
+
+    vcs {
+        root(DslContext.settingsRoot)
+        cleanCheckout = true
+    }
     params {
         select(
             name = "TEST_PHASE",
@@ -160,14 +164,14 @@ object CustomTestRunner : BuildType({
             allowEmpty = false
         )
         select(
-            name = "BUILD_FILE",
+            name = "TEST_TYPE",
             value = "",
-            label = "BUILD_FILE",
+            label = "TEST_TYPE",
             description = "Build File of the Test(s)",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowMultiple = false,
-            options = listOf("api-tests/build.gradle", "e2e-tests/build.gradle", "library/build.gradle")
+            options = listOf("api-tests", "e2e-tests", "library")
         )
     }
     steps {
@@ -182,7 +186,7 @@ object CustomTestRunner : BuildType({
         gradle {
             name = "Execute Test(s)"
             tasks = "clean test --tests %RUN_ONLY%"
-            buildFile = "%BUILD_FILE%"
+            buildFile = "%TEST_TYPE%/build.gradle"
         }
     }
 })
