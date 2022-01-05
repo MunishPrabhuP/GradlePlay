@@ -13,6 +13,11 @@ project {
     buildType(LevitateRelease)
     buildType(CustomTestRunner)
 
+    params {
+        add {
+            param("env.TEST_PHASE", "")
+        }
+    }
     features {
         add {
             buildReportTab {
