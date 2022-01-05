@@ -116,19 +116,19 @@ object LevitateRelease : BuildType({
 
     params {
         select(
-            name = "TEST_PHASE",
+            name = "env.TEST_PHASE",
             value = "",
             label = "TEST_PHASE",
             description = "Required Test Phase",
             display = ParameterDisplay.PROMPT,
+            options = listOf("Comprehensive", "Sanity"),
             readOnly = false,
-            allowMultiple = false,
-            options = listOf("Comprehensive", "Sanity")
+            allowMultiple = false
         )
     }
     steps {
         script {
-            scriptContent = "echo ##teamcity[setParameter name='env.TEST_PHASE' value='%TEST_PHASE%']"
+            scriptContent = "##teamcity[setParameter name='env.TEST_PHASE' value='dummy']"
         }
     }
 })
