@@ -115,6 +115,9 @@ object LevitateRelease : BuildType({
     name = "Levitate Release"
 
     params {
+        add {
+            param("env.TEST_PHASE", "%dep.LevitateRelease.TEST_PHASE%")
+        }
         select(
             name = "TEST_PHASE",
             value = "",
