@@ -136,7 +136,7 @@ object LICRelease : BuildType({
 
 object UITests : BuildType({
     name = "UI Tests"
-    artifactRules = "test-report.xml => test-report.xml"
+//    artifactRules = "test-report.xml => test-report.xml"
 
     params {
         text(
@@ -151,8 +151,28 @@ object UITests : BuildType({
     }
     steps {
         script {
+            name = "Execute UI Tests"
+            clearConditions()
             scriptContent =
-                "testim --label \"Licensing\" --branch %BRANCH% --token \"b0Q13JwYtxAQ7EecdNMLbkW4YE61DcUYkpe1oAAQCTYjwwbWYA\" --project \"aeHu7B27U7VgxRvjagV2\" --grid \"Testim-Grid\" --reporters junit --report-file test-report.xml"
+                """
+                set -x
+                mkdir -p "%system.teamcity.build.workingDir%/.npm-packages"
+                prefix=%system.teamcity.build.workingDir%/.npm-packages
+                NPM_PACKAGES="%system.teamcity.build.workingDir%/.npm-packages"
+                export PATH="${'$'}PATH:${'$'}NPM_PACKAGES/bin"
+                export NODE_PATH="${'$'}NODE_PATH:${'$'}NPM_PACKAGES/lib/node_modules"
+                npm config set prefix %system.teamcity.build.workingDir%/.npm-packages
+                npm install -g @testim/testim-cli
+                set +x
+                %system.teamcity.build.workingDir%/.npm-packages/bin/testim \
+                  --token "b0Q13JwYtxAQ7EecdNMLbkW4YE61DcUYkpe1oAAQCTYjwwbWYA" \
+                  --project "aeHu7B27U7VgxRvjagV2" \
+                  --label "Licensing" \
+                  --branch %BRANCH% \
+                  --grid "Testim-Grid" \
+                  --reporters teamcity,console \
+                  --report-file ui-test-report.xml
+            """.trimIndent()
         }
     }
 })
