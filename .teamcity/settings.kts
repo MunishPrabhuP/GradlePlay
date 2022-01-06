@@ -139,7 +139,7 @@ object LicensingUI : BuildType({
 
     steps {
         script {
-            scriptContent = "npm i -g @testim/testim-cli"
+            scriptContent = "sudo npm i -g @testim/testim-cli"
         }
         script {
             scriptContent =
