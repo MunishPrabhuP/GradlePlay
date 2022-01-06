@@ -11,7 +11,7 @@ project {
     buildType(E2ETests)
     buildType(APITests)
     buildType(LICRelease)
-    buildType(LicensingUI)
+    buildType(UITests)
     buildType(CustomTestRunner)
 
     features {
@@ -134,17 +134,25 @@ object LICRelease : BuildType({
     }
 })
 
-object LicensingUI : BuildType({
-    name = "Licensing UI"
+object UITests : BuildType({
+    name = "UI Tests"
     artifactRules = "test-report.xml => test-report.xml"
 
+    params {
+        text(
+            name = "BRANCH",
+            value = "master",
+            label = "BRANCH",
+            description = "SCM/VCS Branch",
+            display = ParameterDisplay.NORMAL,
+            readOnly = false,
+            allowEmpty = false
+        )
+    }
     steps {
-//        script {
-//            scriptContent = "sudo npm i -g @testim/testim-cli"
-//        }
         script {
             scriptContent =
-                "testim --label \"Licensing\" --branch \"feature/lic-usage\" --token \"b0Q13JwYtxAQ7EecdNMLbkW4YE61DcUYkpe1oAAQCTYjwwbWYA\" --project \"aeHu7B27U7VgxRvjagV2\" --grid \"Testim-Grid\" --report-file test-report.xml"
+                "testim --label \"Licensing\" --branch %BRANCH% --token \"b0Q13JwYtxAQ7EecdNMLbkW4YE61DcUYkpe1oAAQCTYjwwbWYA\" --project \"aeHu7B27U7VgxRvjagV2\" --grid \"Testim-Grid\" --reporters junit --report-file test-report.xml"
         }
     }
 })
