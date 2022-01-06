@@ -136,7 +136,7 @@ object LICRelease : BuildType({
 
 object LicensingUI : BuildType({
     name = "Licensing UI"
-    artifactRules = "test-results/ui-tests-report.xml => ui-tests/"
+    artifactRules = "test-report.xml => test-report.xml"
 
     steps {
 //        script {
@@ -144,7 +144,7 @@ object LicensingUI : BuildType({
 //        }
         script {
             scriptContent =
-                "testim --label \"Licensing\" --branch \"feature/lic-usage\" --token \"b0Q13JwYtxAQ7EecdNMLbkW4YE61DcUYkpe1oAAQCTYjwwbWYA\" --project \"aeHu7B27U7VgxRvjagV2\" --grid \"Testim-Grid\" --report-file test-results/ui-tests-report.xml --testId \"HjN7ZBBgexY2XYF5\""
+                "testim --label \"Licensing\" --branch \"feature/lic-usage\" --token \"b0Q13JwYtxAQ7EecdNMLbkW4YE61DcUYkpe1oAAQCTYjwwbWYA\" --project \"aeHu7B27U7VgxRvjagV2\" --grid \"Testim-Grid\" --report-file test-report.xml"
         }
     }
 })
