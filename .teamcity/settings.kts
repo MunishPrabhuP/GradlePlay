@@ -151,7 +151,6 @@ object UITests : BuildType({
     }
     steps {
         script {
-            name = "Execute UI Tests"
             clearConditions()
             scriptContent =
                 """
