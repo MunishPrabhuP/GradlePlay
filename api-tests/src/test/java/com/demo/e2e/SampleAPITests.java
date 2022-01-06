@@ -5,7 +5,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class SampleAPITests {
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         System.out.println("API Tests In SetUp");
     }
@@ -15,12 +15,17 @@ public class SampleAPITests {
         System.out.println("API Tests In Test Case 1");
     }
 
-    @Test
+    @Test(groups = {"sanity"})
     public void testcase2() {
         System.out.println("API Tests In Test Case 2");
     }
 
-    @AfterClass
+    @Test
+    public void testcase3() {
+        System.out.println("API Tests In Test Case 3");
+    }
+
+    @AfterClass(alwaysRun = true)
     public void tearDown() {
         System.out.println("API Tests In Tear Down");
     }

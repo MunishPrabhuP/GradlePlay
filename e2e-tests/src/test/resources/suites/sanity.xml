@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Sanity E2E Suite">
+    <groups>
+        <run>
+            <include name="sanity"/>
+        </run>
+    </groups>
+    <test name="E2E TestCases">
+        <classes>
+            <class name="com.demo.e2e.SampleE2ETests"/>
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->

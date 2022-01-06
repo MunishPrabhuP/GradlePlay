@@ -10,7 +10,8 @@ project {
     buildType(HealthCheck)
     buildType(E2ETests)
     buildType(APITests)
-    buildType(LevitateRelease)
+    buildType(LICRelease)
+    buildType(LicensingUI)
     buildType(CustomTestRunner)
 
     features {
@@ -42,7 +43,7 @@ project {
             buildType(E2ETests)
             buildType(APITests)
         }
-        buildType(LevitateRelease)
+        buildType(LICRelease)
     }
 }
 
@@ -101,7 +102,7 @@ object E2ETests : BuildType({
     }
     steps {
         script {
-            scriptContent = "echo %dep.LevitateRelease.env.TEST_PHASE%"
+            scriptContent = "echo %dep.LICRelease.env.TEST_PHASE%"
         }
         gradle {
             name = "Execute E2E Test(s)"
@@ -111,8 +112,8 @@ object E2ETests : BuildType({
     }
 })
 
-object LevitateRelease : BuildType({
-    name = "Levitate Release"
+object LICRelease : BuildType({
+    name = "Levitate LIC Release"
 
     params {
         select(
@@ -128,7 +129,21 @@ object LevitateRelease : BuildType({
     }
     steps {
         script {
-            scriptContent = "##teamcity[setParameter name='env.TEST_PHASE' value='dummy']"
+            scriptContent = "echo ##teamcity[setParameter name='env.TEST_PHASE' value='dummy']"
+        }
+    }
+})
+
+object LicensingUI : BuildType({
+    name = "Licensing UI"
+
+    steps {
+        script {
+            scriptContent = "npm i -g @testim/testim-cli"
+        }
+        script {
+            scriptContent =
+                "testim --label \"Licensing\" --branch \"feature/lic-usage\" --token \"b0Q13JwYtxAQ7EecdNMLbkW4YE61DcUYkpe1oAAQCTYjwwbWYA\" --project \"aeHu7B27U7VgxRvjagV2\" --grid \"Testim-Grid\""
         }
     }
 })
