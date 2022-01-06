@@ -138,9 +138,9 @@ object LicensingUI : BuildType({
     name = "Licensing UI"
 
     steps {
-        script {
-            scriptContent = "sudo npm i -g @testim/testim-cli"
-        }
+//        script {
+//            scriptContent = "sudo npm i -g @testim/testim-cli"
+//        }
         script {
             scriptContent =
                 "testim --label \"Licensing\" --branch \"feature/lic-usage\" --token \"b0Q13JwYtxAQ7EecdNMLbkW4YE61DcUYkpe1oAAQCTYjwwbWYA\" --project \"aeHu7B27U7VgxRvjagV2\" --grid \"Testim-Grid\""
