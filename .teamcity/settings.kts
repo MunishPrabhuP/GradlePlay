@@ -136,7 +136,7 @@ object LICRelease : BuildType({
 
 object UITests : BuildType({
     name = "UI Tests"
-//    artifactRules = "test-report.xml => test-report.xml"
+    artifactRules = "ui-test-report.xml => ui-test-report.xml"
 
     params {
         text(
