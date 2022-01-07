@@ -151,7 +151,7 @@ object Release : BuildType({
     }
     steps {
         script {
-            scriptContent = "echo \"Happy New Year\""
+            scriptContent = "echo %dep.IdeaImplementation_E2ETests.RUN_MODE%"
         }
     }
 })
