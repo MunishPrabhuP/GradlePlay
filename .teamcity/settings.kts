@@ -151,7 +151,7 @@ object Release : BuildType({
     }
     steps {
         script {
-            scriptContent = "echo %RUN_MODE%"
+            scriptContent = "echo \"Happy New Year\""
         }
     }
 })
