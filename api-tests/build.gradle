@@ -16,10 +16,10 @@ dependencies {
 test {
     useTestNG() {
         switch (System.properties['run.group']) {
-            case 'comprehensive':
+            case 'Comprehensive':
                 suites 'src/test/resources/suites/comprehensive.xml'
                 break
-            case 'sanity':
+            case 'Sanity':
                 suites 'src/test/resources/suites/sanity.xml'
                 break
         }

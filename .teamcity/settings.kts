@@ -42,6 +42,7 @@ project {
         parallel {
             buildType(E2ETests)
             buildType(APITests)
+            buildType(UITests)
         }
         buildType(LICRelease)
     }
@@ -76,10 +77,10 @@ object APITests : BuildType({
     params {
         select(
             name = "RUN_MODE",
-            value = "",
+            value = "Comprehensive",
             label = "RUN_MODE",
             description = "Test(s) Run Mode",
-            display = ParameterDisplay.NORMAL,
+            display = ParameterDisplay.PROMPT,
             options = listOf("Comprehensive", "Sanity"),
             readOnly = false,
             allowMultiple = false
@@ -110,10 +111,10 @@ object E2ETests : BuildType({
     params {
         select(
             name = "RUN_MODE",
-            value = "",
+            value = "Comprehensive",
             label = "RUN_MODE",
             description = "Test(s) Run Mode",
-            display = ParameterDisplay.NORMAL,
+            display = ParameterDisplay.PROMPT,
             options = listOf("Comprehensive", "Sanity"),
             readOnly = false,
             allowMultiple = false
@@ -138,10 +139,10 @@ object LICRelease : BuildType({
 
     params {
         select(
-            name = "env.TEST_PHASE",
-            value = "",
-            label = "TEST_PHASE",
-            description = "Required Test Phase",
+            name = "RUN_MODE",
+            value = "Comprehensive",
+            label = "RUN_MODE",
+            description = "Test(s) Run Mode",
             display = ParameterDisplay.PROMPT,
             options = listOf("Comprehensive", "Sanity"),
             readOnly = false,
@@ -150,7 +151,7 @@ object LICRelease : BuildType({
     }
     steps {
         script {
-            scriptContent = "echo ##teamcity[setParameter name='env.TEST_PHASE' value='dummy']"
+            scriptContent = "echo ##teamcity[setParameter name='env.RUN_MODE' value='dummy']"
         }
     }
 })
