@@ -41,8 +41,8 @@ project {
         buildType(HealthCheck)
         parallel {
             buildType(E2ETests)
-//            buildType(APITests)
-//            buildType(UITests)
+            buildType(APITests)
+            buildType(UITests)
         }
         buildType(Release)
     }
@@ -143,7 +143,7 @@ object Release : BuildType({
             value = "Comprehensive",
             label = "RUN_MODE",
             description = "Test(s) Run Mode",
-            display = ParameterDisplay.PROMPT,
+            display = ParameterDisplay.NORMAL,
             options = listOf("Comprehensive", "Sanity"),
             readOnly = false,
             allowMultiple = false
