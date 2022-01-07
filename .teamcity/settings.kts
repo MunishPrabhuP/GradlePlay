@@ -10,7 +10,7 @@ project {
     buildType(HealthCheck)
     buildType(E2ETests)
     buildType(APITests)
-    buildType(LICRelease)
+    buildType(Release)
     buildType(UITests)
     buildType(CustomTestRunner)
 
@@ -44,7 +44,7 @@ project {
             buildType(APITests)
             buildType(UITests)
         }
-        buildType(LICRelease)
+        buildType(Release)
     }
 }
 
@@ -134,8 +134,8 @@ object E2ETests : BuildType({
     }
 })
 
-object LICRelease : BuildType({
-    name = "Levitate LIC Release"
+object Release : BuildType({
+    name = "Product Release"
 
     params {
         select(
@@ -151,7 +151,7 @@ object LICRelease : BuildType({
     }
     steps {
         script {
-            scriptContent = "echo ##teamcity[setParameter name='env.RUN_MODE' value='dummy']"
+            scriptContent = "echo %RUN_MODE%"
         }
     }
 })
