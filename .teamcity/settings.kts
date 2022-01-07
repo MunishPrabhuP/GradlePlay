@@ -38,12 +38,10 @@ project {
         }
     }
     sequential {
+        buildType(HealthCheck)
         parallel {
-            buildType(HealthCheck)
-            parallel {
-                buildType(E2ETests)
-                buildType(APITests)
-            }
+            buildType(E2ETests)
+            buildType(APITests)
             buildType(UITests)
         }
         buildType(Release)
