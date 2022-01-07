@@ -38,10 +38,12 @@ project {
         }
     }
     sequential {
-        buildType(HealthCheck)
         parallel {
-            buildType(E2ETests)
-            buildType(APITests)
+            buildType(HealthCheck)
+            parallel {
+                buildType(E2ETests)
+                buildType(APITests)
+            }
             buildType(UITests)
         }
         buildType(Release)
@@ -162,10 +164,10 @@ object UITests : BuildType({
 
     params {
         text(
-            name = "BRANCH",
+            name = "TestIM BRANCH",
             value = "feature/lic-usage",
-            label = "BRANCH",
-            description = "SCM/VCS Branch",
+            label = "TestIM BRANCH",
+            description = "Feature Branch in TestIM",
             display = ParameterDisplay.NORMAL,
             readOnly = false,
             allowEmpty = false
@@ -191,8 +193,7 @@ object UITests : BuildType({
                   --label "Licensing" \
                   --branch %BRANCH% \
                   --grid "Testim-Grid" \
-                  --reporters teamcity,console \
-                  --report-file ui-test-report.xml
+                  --reporters teamcity,console
             """.trimIndent()
         }
     }
