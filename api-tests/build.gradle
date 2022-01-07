@@ -15,7 +15,14 @@ dependencies {
 
 test {
     useTestNG() {
-
+        switch (System.properties['run.group']) {
+            case 'comprehensive':
+                suites 'src/test/resources/suites/comprehensive.xml'
+                break
+            case 'sanity':
+                suites 'src/test/resources/suites/sanity.xml'
+                break
+        }
     }
     testLogging {
         events "PASSED", "SKIPPED", "FAILED", "STANDARD_OUT", "STANDARD_ERROR"

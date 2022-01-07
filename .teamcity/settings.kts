@@ -73,6 +73,18 @@ object APITests : BuildType({
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
+    params {
+        select(
+            name = "RUN_MODE",
+            value = "",
+            label = "RUN_MODE",
+            description = "Test(s) Run Mode",
+            display = ParameterDisplay.NORMAL,
+            options = listOf("Comprehensive", "Sanity"),
+            readOnly = false,
+            allowMultiple = false
+        )
+    }
     dependencies {
         snapshot(HealthCheck) {
             onDependencyFailure = FailureAction.FAIL_TO_START
@@ -81,7 +93,7 @@ object APITests : BuildType({
     steps {
         gradle {
             name = "Execute API Test(s)"
-            tasks = "clean test --tests com.demo.e2e.SampleAPITests"
+            tasks = "clean test --tests -Drun.group=%RUN_MODE%"
             buildFile = "api-tests/build.gradle"
         }
     }
@@ -95,18 +107,27 @@ object E2ETests : BuildType({
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
+    params {
+        select(
+            name = "RUN_MODE",
+            value = "",
+            label = "RUN_MODE",
+            description = "Test(s) Run Mode",
+            display = ParameterDisplay.NORMAL,
+            options = listOf("Comprehensive", "Sanity"),
+            readOnly = false,
+            allowMultiple = false
+        )
+    }
     dependencies {
         snapshot(HealthCheck) {
             onDependencyFailure = FailureAction.FAIL_TO_START
         }
     }
     steps {
-        script {
-            scriptContent = "echo %dep.LICRelease.env.TEST_PHASE%"
-        }
         gradle {
             name = "Execute E2E Test(s)"
-            tasks = "clean test --tests com.demo.e2e.SampleE2ETests"
+            tasks = "clean test --tests -Drun.group=%RUN_MODE%"
             buildFile = "e2e-tests/build.gradle"
         }
     }

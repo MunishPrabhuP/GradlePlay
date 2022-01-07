@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Comprehensive API Suite">
+    <test name="API TestCases">
+        <classes>
+            <class name="com.demo.e2e.SampleAPITests"/>
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->
