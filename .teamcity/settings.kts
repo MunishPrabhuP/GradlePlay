@@ -41,8 +41,8 @@ project {
         buildType(HealthCheck)
         parallel {
             buildType(E2ETests)
-            buildType(APITests)
-            buildType(UITests)
+//            buildType(APITests)
+//            buildType(UITests)
         }
         buildType(Release)
     }
