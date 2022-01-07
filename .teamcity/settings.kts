@@ -162,7 +162,7 @@ object UITests : BuildType({
 
     params {
         text(
-            name = "TestIM BRANCH",
+            name = "TestIM_BRANCH",
             value = "feature/lic-usage",
             label = "TestIM BRANCH",
             description = "Feature Branch in TestIM",
@@ -189,7 +189,7 @@ object UITests : BuildType({
                   --token "b0Q13JwYtxAQ7EecdNMLbkW4YE61DcUYkpe1oAAQCTYjwwbWYA" \
                   --project "aeHu7B27U7VgxRvjagV2" \
                   --label "Licensing" \
-                  --branch %BRANCH% \
+                  --branch %TestIM_BRANCH% \
                   --grid "Testim-Grid" \
                   --reporters teamcity,console
             """.trimIndent()
