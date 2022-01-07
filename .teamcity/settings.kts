@@ -93,7 +93,7 @@ object APITests : BuildType({
     steps {
         gradle {
             name = "Execute API Test(s)"
-            tasks = "clean test --tests -Drun.group=%RUN_MODE%"
+            tasks = "clean test -Drun.group=%RUN_MODE%"
             buildFile = "api-tests/build.gradle"
         }
     }
@@ -127,7 +127,7 @@ object E2ETests : BuildType({
     steps {
         gradle {
             name = "Execute E2E Test(s)"
-            tasks = "clean test --tests -Drun.group=%RUN_MODE%"
+            tasks = "clean test -Drun.group=%RUN_MODE%"
             buildFile = "e2e-tests/build.gradle"
         }
     }
