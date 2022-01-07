@@ -163,7 +163,7 @@ object UITests : BuildType({
     params {
         text(
             name = "BRANCH",
-            value = "master",
+            value = "feature/lic-usage",
             label = "BRANCH",
             description = "SCM/VCS Branch",
             display = ParameterDisplay.NORMAL,
