@@ -143,7 +143,7 @@ object Release : BuildType({
             value = "Comprehensive",
             label = "RUN MODE",
             description = "Test(s) Run Mode",
-            display = ParameterDisplay.NORMAL,
+            display = ParameterDisplay.PROMPT,
             options = listOf("Comprehensive", "Sanity"),
             readOnly = false,
             allowMultiple = false
