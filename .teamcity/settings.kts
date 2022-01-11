@@ -78,7 +78,7 @@ object APITests : BuildType({
         select(
             name = "RUN_MODE",
             value = "Comprehensive",
-            label = "RUN_MODE",
+            label = "RUN MODE",
             description = "Test(s) Run Mode",
             display = ParameterDisplay.PROMPT,
             options = listOf("Comprehensive", "Sanity"),
@@ -112,7 +112,7 @@ object E2ETests : BuildType({
         select(
             name = "RUN_MODE",
             value = "Comprehensive",
-            label = "RUN_MODE",
+            label = "RUN MODE",
             description = "Test(s) Run Mode",
             display = ParameterDisplay.PROMPT,
             options = listOf("Comprehensive", "Sanity"),
@@ -141,7 +141,7 @@ object Release : BuildType({
         select(
             name = "RUN_MODE",
             value = "Comprehensive",
-            label = "RUN_MODE",
+            label = "RUN MODE",
             description = "Test(s) Run Mode",
             display = ParameterDisplay.NORMAL,
             options = listOf("Comprehensive", "Sanity"),
@@ -151,7 +151,7 @@ object Release : BuildType({
     }
     steps {
         script {
-            scriptContent = "echo %dep.IdeaImplementation_E2ETests.RUN_MODE%"
+            scriptContent = "echo \"Happy New Year\""
         }
     }
 })
@@ -217,7 +217,7 @@ object CustomTestRunner : BuildType({
         text(
             name = "RUN_ONLY",
             value = "",
-            label = "RUN_ONLY",
+            label = "RUN ONLY",
             description = "To run Single Test : SampleE2ETests/com.demo.e2e.SampleE2ETests, To run all the Tests in a package - com.demo.e2e.*",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
@@ -226,7 +226,7 @@ object CustomTestRunner : BuildType({
         select(
             name = "TEST_TYPE",
             value = "",
-            label = "TEST_TYPE",
+            label = "TEST TYPE",
             description = "Build File of the Test(s)",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
