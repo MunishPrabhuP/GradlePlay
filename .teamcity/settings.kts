@@ -77,7 +77,7 @@ object APITests : BuildType({
     params {
         select(
             name = "RUN_MODE",
-            value = "Comprehensive",
+            value = "%RELEASE_RUN_MODE%",
             label = "RUN MODE",
             description = "Test(s) Run Mode",
             display = ParameterDisplay.PROMPT,
@@ -111,7 +111,7 @@ object E2ETests : BuildType({
     params {
         select(
             name = "RUN_MODE",
-            value = "Comprehensive",
+            value = "%RELEASE_RUN_MODE%",
             label = "RUN MODE",
             description = "Test(s) Run Mode",
             display = ParameterDisplay.PROMPT,
@@ -139,7 +139,7 @@ object Release : BuildType({
 
     params {
         select(
-            name = "RUN_MODE",
+            name = "reverse.dep.*.RELEASE_RUN_MODE",
             value = "Comprehensive",
             label = "RUN MODE",
             description = "Test(s) Run Mode",
