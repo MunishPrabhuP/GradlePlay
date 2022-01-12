@@ -9,11 +9,6 @@ To apply the patch, change the buildType with id = 'Release'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("Release")) {
-    check(type == BuildTypeSettings.Type.REGULAR) {
-        "Unexpected option value: type = $type"
-    }
-    type = BuildTypeSettings.Type.COMPOSITE
-
     vcs {
 
         check(showDependenciesChanges == false) {
