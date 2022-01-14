@@ -1,7 +1,6 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
-import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.schedule
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
 /*
@@ -16,21 +15,5 @@ changeBuildType(RelativeId("Release")) {
             "Unexpected option value: showDependenciesChanges = $showDependenciesChanges"
         }
         showDependenciesChanges = true
-    }
-
-    triggers {
-        add {
-            schedule {
-                schedulingPolicy = daily {
-                    hour = 9
-                    timezone = "Asia/Kolkata"
-                }
-                branchFilter = ""
-                triggerBuild = always()
-                withPendingChangesOnly = false
-                enforceCleanCheckout = true
-                enforceCleanCheckoutForDependencies = true
-            }
-        }
     }
 }
