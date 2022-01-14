@@ -1,6 +1,7 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
 /*
@@ -15,5 +16,14 @@ changeBuildType(RelativeId("Release")) {
             "Unexpected option value: showDependenciesChanges = $showDependenciesChanges"
         }
         showDependenciesChanges = true
+    }
+
+    triggers {
+        add {
+            vcs {
+                triggerRules = "+:.teamcity/**"
+                branchFilter = ""
+            }
+        }
     }
 }
