@@ -32,5 +32,18 @@ changeBuildType(RelativeId("Release")) {
                 enforceCleanCheckoutForDependencies = true
             }
         }
+        add {
+            schedule {
+                schedulingPolicy = daily {
+                    hour = 9
+                    timezone = "Asia/Kolkata"
+                }
+                branchFilter = ""
+                triggerBuild = always()
+                withPendingChangesOnly = false
+                enforceCleanCheckout = true
+                enforceCleanCheckoutForDependencies = true
+            }
+        }
     }
 }
