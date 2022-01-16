@@ -37,7 +37,6 @@ create(DslContext.projectId, BuildType({
                 authType = token {
                     token = "credentialsJSON:a501b077-abfa-4103-b50a-24850da66bcc"
                 }
-                filterTargetBranch = "+:master"
                 filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
             }
         }
