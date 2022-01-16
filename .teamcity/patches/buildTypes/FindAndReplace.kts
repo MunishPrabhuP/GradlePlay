@@ -2,6 +2,8 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.FileContentReplacer
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.replaceContent
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
 /*
@@ -15,6 +17,18 @@ create(DslContext.projectId, BuildType({
 
     vcs {
         root(RelativeId("HttpsGithubComMunishPrabhuPGradlePlayRefsHeadsMaster"))
+    }
+
+    features {
+        replaceContent {
+            fileRules = """
+                +:api-tests/src/test/java/com/demo/e2e/SampleAPITests.java
+                +:e2e-tests/src/test/java/com/demo/e2e/SampleE2ETests.java
+            """.trimIndent()
+            pattern = "Test Case"
+            regexMode = FileContentReplacer.RegexMode.FIXED_STRINGS
+            replacement = "TestCase"
+        }
     }
 }))
 
