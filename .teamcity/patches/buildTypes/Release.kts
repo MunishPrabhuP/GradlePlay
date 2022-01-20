@@ -1,6 +1,8 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
 /*
@@ -15,5 +17,17 @@ changeBuildType(RelativeId("Release")) {
             "Unexpected option value: showDependenciesChanges = $showDependenciesChanges"
         }
         showDependenciesChanges = true
+    }
+
+    expectSteps {
+        script {
+            scriptContent = """echo "Happy New Year""""
+        }
+    }
+    steps {
+        update<ScriptBuildStep>(0) {
+            clearConditions()
+            scriptContent = """echo "Executing %RELEASE_RUN_MODE%""""
+        }
     }
 }
