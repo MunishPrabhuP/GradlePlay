@@ -11,14 +11,6 @@ To apply the patch, change the buildType with id = 'Release'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("Release")) {
-    vcs {
-
-        check(showDependenciesChanges == false) {
-            "Unexpected option value: showDependenciesChanges = $showDependenciesChanges"
-        }
-        showDependenciesChanges = true
-    }
-
     expectSteps {
         script {
             scriptContent = """echo "Happy New Year""""
