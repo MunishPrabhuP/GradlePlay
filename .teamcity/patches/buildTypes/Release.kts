@@ -19,7 +19,7 @@ changeBuildType(RelativeId("Release")) {
     steps {
         update<ScriptBuildStep>(0) {
             clearConditions()
-            scriptContent = """echo "Executing %reverse.dep.*.RELEASE_RUN_MODE%""""
+            scriptContent = """echo "Executing %reverse.dep.*.RELEASE_RUN_MODE% suite""""
         }
     }
 }
