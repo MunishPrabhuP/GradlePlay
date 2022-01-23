@@ -151,7 +151,7 @@ object Release : BuildType({
     }
     steps {
         script {
-            scriptContent = "echo \"Happy New Year\""
+            scriptContent = """echo "Executing %reverse.dep.*.RELEASE_RUN_MODE% suite""""
         }
     }
 })

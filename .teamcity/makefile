@@ -1,0 +1,2 @@
+run-ui-tests:
+    testim --token "b0Q13JwYtxAQ7EecdNMLbkW4YE61DcUYkpe1oAAQCTYjwwbWYA" --project "aeHu7B27U7VgxRvjagV2" --label "Licensing" --grid "Testim-Grid" --branch $(BRANCH) --report-file test-report.xml
