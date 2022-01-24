@@ -101,7 +101,7 @@ object APITests : BuildType({
 })
 
 object E2ETests : BuildType({
-    name = "E2E %RELEASE_RUN_MODE% Tests"
+    name = "E2E Tests"
     artifactRules = "e2e-tests/build/reports/ => e2e-tests/reports/"
 
     vcs {
@@ -120,6 +120,7 @@ object E2ETests : BuildType({
             allowMultiple = false
         )
     }
+    name = "E2E %RUN_MODE% Tests"
     dependencies {
         snapshot(HealthCheck) {
             onDependencyFailure = FailureAction.FAIL_TO_START
