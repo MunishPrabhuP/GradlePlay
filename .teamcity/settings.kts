@@ -101,7 +101,7 @@ object APITests : BuildType({
 })
 
 object E2ETests : BuildType({
-    name = "E2E Tests"
+    name = "E2E %RELEASE_RUN_MODE% Tests"
     artifactRules = "e2e-tests/build/reports/ => e2e-tests/reports/"
 
     vcs {
