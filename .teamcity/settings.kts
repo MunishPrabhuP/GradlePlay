@@ -56,19 +56,11 @@ object HealthCheck : BuildType({
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
-    params {
-        add {
-            param("env.TEAMCITY_BUILDCONF_NAME", "Health Check")
-        }
-    }
     steps {
         gradle {
             name = "Execute Health Check(s)"
             tasks = "clean test --tests com.demo.e2e.HealthCheck"
             buildFile = "library/build.gradle"
-        }
-        script {
-
         }
     }
 })
