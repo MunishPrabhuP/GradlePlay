@@ -11,8 +11,11 @@ accordingly, and delete the patch script.
 */
 changeProject(DslContext.projectId) {
     params {
-        remove {
+        expect {
             param("env.TEAMCITY_BUILDCONF_NAME", "")
+        }
+        update {
+            param("env.TEAMCITY_BUILDCONF_NAME", "Testing")
         }
     }
 }
