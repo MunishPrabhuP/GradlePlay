@@ -14,11 +14,6 @@ project {
     buildType(UITests)
     buildType(CustomTestRunner)
 
-    params {
-        add {
-            param("env.TEAMCITY_BUILDCONF_NAME", "Testing")
-        }
-    }
     features {
         add {
             buildReportTab {
