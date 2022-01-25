@@ -14,6 +14,11 @@ project {
     buildType(UITests)
     buildType(CustomTestRunner)
 
+    params {
+        add {
+            param("env.TEAMCITY_BUILDCONF_NAME", "")
+        }
+    }
     features {
         add {
             buildReportTab {
@@ -119,7 +124,6 @@ object E2ETests : BuildType({
             allowMultiple = false
         )
     }
-    name = "E2E %RUN_MODE% Tests"
     dependencies {
         snapshot(HealthCheck) {
             onDependencyFailure = FailureAction.FAIL_TO_START
