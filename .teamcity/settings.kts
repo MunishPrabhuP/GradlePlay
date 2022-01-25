@@ -141,6 +141,9 @@ object E2ETests : BuildType({
         script {
             scriptContent = """echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value='E2E Tests']""""
         }
+        script {
+            scriptContent = """echo "Executing %env.TEAMCITY_BUILDCONF_NAME% suite""""
+        }
     }
 })
 
