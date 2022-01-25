@@ -99,7 +99,7 @@ object APITests : BuildType({
         script {
             name = "Updating TEAMCITY_BUILDCONF_NAME Environmental Parameter"
             scriptContent =
-                """echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value='API %RUN_MODE% Tests']""""
+                """echo "##teamcity[setParameter name='system.teamcity.buildConfName' value='API %RUN_MODE% Tests']""""
             executionMode = BuildStep.ExecutionMode.ALWAYS
         }
     }
