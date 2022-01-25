@@ -133,9 +133,6 @@ object E2ETests : BuildType({
         }
     }
     steps {
-        script {
-            scriptContent = """echo "Executing %env.TEAMCITY_BUILDCONF_NAME% suite""""
-        }
         gradle {
             name = "Execute E2E Test(s)"
             tasks = "clean test -Drun.group=%RUN_MODE%"
@@ -148,6 +145,7 @@ object E2ETests : BuildType({
             scriptContent = """echo "Executing %env.TEAMCITY_BUILDCONF_NAME% suite""""
         }
     }
+    name = "%env.TEAMCITY_BUILDCONF_NAME%"
 })
 
 object Release : BuildType({
