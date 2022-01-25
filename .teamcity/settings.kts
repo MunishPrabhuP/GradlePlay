@@ -1,8 +1,14 @@
-import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
+import jetbrains.buildServer.configs.kotlin.v2019_2.FailureAction
+import jetbrains.buildServer.configs.kotlin.v2019_2.ParameterDisplay
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
+import jetbrains.buildServer.configs.kotlin.v2019_2.project
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.buildReportTab
+import jetbrains.buildServer.configs.kotlin.v2019_2.sequential
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.add
+import jetbrains.buildServer.configs.kotlin.v2019_2.version
 
 version = "2020.1"
 
@@ -84,6 +90,7 @@ object APITests : BuildType({
             readOnly = false,
             allowMultiple = false
         )
+        param("env.TEAMCITY_BUILDCONF_NAME", "Levitate LIC API %RUN_MODE% Tests")
     }
     dependencies {
         snapshot(HealthCheck) {
@@ -95,12 +102,6 @@ object APITests : BuildType({
             name = "Execute API Test(s)"
             tasks = "clean test -Drun.group=%RUN_MODE%"
             buildFile = "api-tests/build.gradle"
-        }
-        script {
-            name = "Updating TEAMCITY_BUILDCONF_NAME Environmental Parameter"
-            scriptContent =
-                """echo "##teamcity[setParameter name='system.teamcity.buildConfName' value='API %RUN_MODE% Tests']""""
-            executionMode = BuildStep.ExecutionMode.ALWAYS
         }
     }
 })
@@ -124,6 +125,7 @@ object E2ETests : BuildType({
             readOnly = false,
             allowMultiple = false
         )
+        param("env.TEAMCITY_BUILDCONF_NAME", "Levitate LIC E2E %RUN_MODE% Tests")
     }
     dependencies {
         snapshot(HealthCheck) {
@@ -135,12 +137,6 @@ object E2ETests : BuildType({
             name = "Execute E2E Test(s)"
             tasks = "clean test -Drun.group=%RUN_MODE%"
             buildFile = "e2e-tests/build.gradle"
-        }
-        script {
-            name = "Updating TEAMCITY_BUILDCONF_NAME Environmental Parameter"
-            scriptContent =
-                """echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value='E2E %RUN_MODE% Tests']""""
-            executionMode = BuildStep.ExecutionMode.ALWAYS
         }
     }
 })
