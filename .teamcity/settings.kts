@@ -16,7 +16,7 @@ project {
 
     params {
         add {
-            param("env.TEAMCITY_BUILDCONF_NAME", "")
+            param("env.TEAMCITY_BUILDCONF_NAME", "Testing")
         }
     }
     features {
@@ -145,7 +145,6 @@ object E2ETests : BuildType({
             scriptContent = """echo "Executing %env.TEAMCITY_BUILDCONF_NAME% suite""""
         }
     }
-    name = "%env.TEAMCITY_BUILDCONF_NAME%"
 })
 
 object Release : BuildType({
