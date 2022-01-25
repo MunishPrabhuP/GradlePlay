@@ -97,8 +97,10 @@ object APITests : BuildType({
             buildFile = "api-tests/build.gradle"
         }
         script {
+            name = "Updating TEAMCITY_BUILDCONF_NAME Environmental Parameter"
             scriptContent =
                 """echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value='API %RUN_MODE% Tests']""""
+            executionMode = BuildStep.ExecutionMode.ALWAYS
         }
     }
 })
@@ -135,8 +137,10 @@ object E2ETests : BuildType({
             buildFile = "e2e-tests/build.gradle"
         }
         script {
+            name = "Updating TEAMCITY_BUILDCONF_NAME Environmental Parameter"
             scriptContent =
                 """echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value='E2E %RUN_MODE% Tests']""""
+            executionMode = BuildStep.ExecutionMode.ALWAYS
         }
     }
 })
