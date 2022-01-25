@@ -139,7 +139,7 @@ object E2ETests : BuildType({
             buildFile = "e2e-tests/build.gradle"
         }
         script {
-            scriptContent = """echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value='E2E Tests']""""
+            scriptContent = """echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value='E2E %RUN_MODE% Tests']""""
         }
         script {
             scriptContent = """echo "Executing %env.TEAMCITY_BUILDCONF_NAME% suite""""
