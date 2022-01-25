@@ -101,6 +101,9 @@ object APITests : BuildType({
             tasks = "clean test -Drun.group=%RUN_MODE%"
             buildFile = "api-tests/build.gradle"
         }
+        script {
+            scriptContent = """echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value='API Tests']"""""
+        }
     }
 })
 
@@ -134,6 +137,9 @@ object E2ETests : BuildType({
             name = "Execute E2E Test(s)"
             tasks = "clean test -Drun.group=%RUN_MODE%"
             buildFile = "e2e-tests/build.gradle"
+        }
+        script {
+            scriptContent = """echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value='E2E Tests']"""""
         }
     }
 })
