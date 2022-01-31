@@ -7,6 +7,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.v2019_2.sequential
+import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.schedule
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.add
 import jetbrains.buildServer.configs.kotlin.v2019_2.version
 
@@ -90,7 +91,6 @@ object APITests : BuildType({
             readOnly = false,
             allowMultiple = false
         )
-        param("env.TEAMCITY_BUILDCONF_NAME", "Levitate LIC API %RUN_MODE% Tests")
     }
     dependencies {
         snapshot(HealthCheck) {
@@ -155,6 +155,20 @@ object Release : BuildType({
             readOnly = false,
             allowMultiple = false
         )
+    }
+    triggers {
+        add {
+            schedule {
+                schedulingPolicy = daily {
+                    hour = 15
+                    minute = 30
+                }
+                branchFilter = ""
+                triggerBuild = always()
+                withPendingChangesOnly = false
+                param("%reverse.dep.*.RELEASE_RUN_MODE%", "Sanity")
+            }
+        }
     }
     steps {
         script {
