@@ -161,7 +161,7 @@ object Release : BuildType({
             schedule {
                 schedulingPolicy = daily {
                     hour = 15
-                    minute = 30
+                    minute = 20
                 }
                 branchFilter = ""
                 triggerBuild = always()
