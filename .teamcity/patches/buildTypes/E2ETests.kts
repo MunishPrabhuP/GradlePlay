@@ -25,7 +25,7 @@ changeBuildType(RelativeId("E2ETests")) {
                 executionMode = BuildStep.ExecutionMode.ALWAYS
 
                 conditions {
-                    doesNotEqual("RELEASE_VERSION", "22.0.1")
+                    doesNotEqual("RELEASE_VERSION", """""""")
                 }
                 scriptContent = "echo 'Say Hello'"
             }
