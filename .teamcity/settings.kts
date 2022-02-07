@@ -91,6 +91,33 @@ object APITests : BuildType({
             readOnly = false,
             allowMultiple = false
         )
+        text(
+            name = "RELEASE_VERSION",
+            value = "%RELEASE_VERSION%",
+            label = "RELEASE VERSION",
+            description = "Product Release Version (Ex.) 22.1.0",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = true
+        )
+        text(
+            name = "TEST_CYCLE",
+            value = "%TEST_CYCLE%",
+            label = "TEST CYCLE",
+            description = "Test Execution Cycle",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = true
+        )
+        text(
+            name = "TEST_FOLDER",
+            value = "%TEST_FOLDER%",
+            label = "TEST FOLDER",
+            description = "Test Execution Folder",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = true
+        )
     }
     dependencies {
         snapshot(HealthCheck) {
@@ -125,7 +152,33 @@ object E2ETests : BuildType({
             readOnly = false,
             allowMultiple = false
         )
-        param("env.TEAMCITY_BUILDCONF_NAME", "Levitate LIC E2E %RUN_MODE% Tests")
+        text(
+            name = "RELEASE_VERSION",
+            value = "%RELEASE_VERSION%",
+            label = "RELEASE VERSION",
+            description = "Product Release Version (Ex.) 22.1.0",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = true
+        )
+        text(
+            name = "TEST_CYCLE",
+            value = "%TEST_CYCLE%",
+            label = "TEST CYCLE",
+            description = "Test Execution Cycle",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = true
+        )
+        text(
+            name = "TEST_FOLDER",
+            value = "%TEST_FOLDER%",
+            label = "TEST FOLDER",
+            description = "Test Execution Folder",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = true
+        )
     }
     dependencies {
         snapshot(HealthCheck) {
@@ -155,20 +208,33 @@ object Release : BuildType({
             readOnly = false,
             allowMultiple = false
         )
-    }
-    triggers {
-        add {
-            schedule {
-                schedulingPolicy = daily {
-                    hour = 15
-                    minute = 20
-                }
-                branchFilter = ""
-                triggerBuild = always()
-                withPendingChangesOnly = false
-                param("%reverse.dep.*.RELEASE_RUN_MODE%", "Sanity")
-            }
-        }
+        text(
+            name = "reverse.dep.*.RELEASE_VERSION",
+            value = "",
+            label = "RELEASE VERSION",
+            description = "Product Release Version (Ex.) 22.1.0",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = true
+        )
+        text(
+            name = "reverse.dep.*.TEST_CYCLE",
+            value = "",
+            label = "TEST CYCLE",
+            description = "Test Execution Cycle",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = true
+        )
+        text(
+            name = "reverse.dep.*.TEST_FOLDER",
+            value = "",
+            label = "TEST FOLDER",
+            description = "Test Execution Folder",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = true
+        )
     }
     steps {
         script {
