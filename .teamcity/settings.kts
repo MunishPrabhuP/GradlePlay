@@ -1,3 +1,4 @@
+import jetbrains.buildServer.configs.kotlin.v2019_2.BuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2019_2.FailureAction
@@ -111,7 +112,7 @@ object APITests : BuildType({
         )
         text(
             name = "TEST_FOLDER",
-            value = "%TEST_FOLDER%",
+            value = "%API_TESTS_FOLDER%",
             label = "TEST FOLDER",
             description = "Test Execution Folder",
             display = ParameterDisplay.PROMPT,
@@ -172,7 +173,7 @@ object E2ETests : BuildType({
         )
         text(
             name = "TEST_FOLDER",
-            value = "%TEST_FOLDER%",
+            value = "%E2E_TESTS_FOLDER%",
             label = "TEST FOLDER",
             description = "Test Execution Folder",
             display = ParameterDisplay.PROMPT,
@@ -190,6 +191,15 @@ object E2ETests : BuildType({
             name = "Execute E2E Test(s)"
             tasks = "clean test -Drun.group=%RUN_MODE%"
             buildFile = "e2e-tests/build.gradle"
+        }
+        script {
+            name = "Say Hello"
+            executionMode = BuildStep.ExecutionMode.ALWAYS
+
+            conditions {
+                doesNotEqual("RELEASE_VERSION", "")
+            }
+            scriptContent = "echo 'Say Hello'"
         }
     }
 })
@@ -227,10 +237,19 @@ object Release : BuildType({
             allowEmpty = true
         )
         text(
-            name = "reverse.dep.*.TEST_FOLDER",
+            name = "reverse.dep.*.API_TESTS_FOLDER",
             value = "",
-            label = "TEST FOLDER",
-            description = "Test Execution Folder",
+            label = "API TESTS FOLDER",
+            description = "API Tests Execution Folder",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = true
+        )
+        text(
+            name = "reverse.dep.*.E2E_TESTS_FOLDER",
+            value = "",
+            label = "E2E TESTS FOLDER",
+            description = "E2E Tests Execution Folder",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
