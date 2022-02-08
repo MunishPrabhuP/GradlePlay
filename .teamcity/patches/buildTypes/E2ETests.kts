@@ -20,7 +20,7 @@ changeBuildType(RelativeId("E2ETests")) {
             param("RELEASE_VERSION", """""""")
         }
         add {
-            param("RELEASE_RUN_MODE", """""""")
+            param("RELEASE_RUN_MODE", "")
         }
     }
 }
