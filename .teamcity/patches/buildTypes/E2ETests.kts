@@ -13,5 +13,8 @@ changeBuildType(RelativeId("E2ETests")) {
         add {
             param("RELEASE_CYCLE", """""""")
         }
+        add {
+            param("RELEASE_E2E_FOLDER", """""""")
+        }
     }
 }
