@@ -93,28 +93,28 @@ object APITests : BuildType({
             allowMultiple = false
         )
         text(
-            name = "RELEASE_VERSION",
+            name = "ZEPHYR_VERSION",
             value = "%RELEASE_VERSION%",
-            label = "RELEASE VERSION",
+            label = "ZEPHYR TEST VERSION",
             description = "Product Release Version (Ex.) 22.1.0",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
         )
         text(
-            name = "TEST_CYCLE",
-            value = "%TEST_CYCLE%",
-            label = "TEST CYCLE",
+            name = "ZEPHYR_CYCLE",
+            value = "%RELEASE_CYCLE%",
+            label = "ZEPHYR TEST CYCLE",
             description = "Test Execution Cycle",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
         )
         text(
-            name = "TEST_FOLDER",
-            value = "%API_TESTS_FOLDER%",
-            label = "TEST FOLDER",
-            description = "Test Execution Folder",
+            name = "ZEPHYR_FOLDER",
+            value = "%RELEASE_API_FOLDER%",
+            label = "ZEPHYR TEST FOLDER",
+            description = "Test(s) Execution Folder",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
@@ -154,28 +154,28 @@ object E2ETests : BuildType({
             allowMultiple = false
         )
         text(
-            name = "RELEASE_VERSION",
+            name = "ZEPHYR_VERSION",
             value = "%RELEASE_VERSION%",
-            label = "RELEASE VERSION",
+            label = "ZEPHYR TEST VERSION",
             description = "Product Release Version (Ex.) 22.1.0",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
         )
         text(
-            name = "TEST_CYCLE",
-            value = "%TEST_CYCLE%",
-            label = "TEST CYCLE",
+            name = "ZEPHYR_CYCLE",
+            value = "%RELEASE_CYCLE%",
+            label = "ZEPHYR TEST CYCLE",
             description = "Test Execution Cycle",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
         )
         text(
-            name = "TEST_FOLDER",
-            value = "%E2E_TESTS_FOLDER%",
-            label = "TEST FOLDER",
-            description = "Test Execution Folder",
+            name = "ZEPHYR_FOLDER",
+            value = "%RELEASE_E2E_FOLDER%",
+            label = "ZEPHYR TEST FOLDER",
+            description = "Test(s) Execution Folder",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
@@ -221,35 +221,35 @@ object Release : BuildType({
         text(
             name = "reverse.dep.*.RELEASE_VERSION",
             value = "",
-            label = "RELEASE VERSION",
+            label = "ZEPHYR TEST VERSION",
             description = "Product Release Version (Ex.) 22.1.0",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
         )
         text(
-            name = "reverse.dep.*.TEST_CYCLE",
+            name = "reverse.dep.*.RELEASE_CYCLE",
             value = "",
-            label = "TEST CYCLE",
+            label = "ZEPHYR TEST CYCLE",
             description = "Test Execution Cycle",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
         )
         text(
-            name = "reverse.dep.*.API_TESTS_FOLDER",
+            name = "reverse.dep.*.RELEASE_E2E_FOLDER",
             value = "",
-            label = "API TESTS FOLDER",
-            description = "API Tests Execution Folder",
+            label = "ZEPHYR E2E TEST FOLDER",
+            description = "E2E Test(s) Execution Folder",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
         )
         text(
-            name = "reverse.dep.*.E2E_TESTS_FOLDER",
+            name = "reverse.dep.*.RELEASE_API_FOLDER",
             value = "",
-            label = "E2E TESTS FOLDER",
-            description = "E2E Tests Execution Folder",
+            label = "ZEPHYR API TEST FOLDER",
+            description = "API Test(s) Execution Folder",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
