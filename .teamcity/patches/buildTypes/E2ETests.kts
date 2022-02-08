@@ -1,9 +1,6 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
 /*
@@ -24,32 +21,6 @@ changeBuildType(RelativeId("E2ETests")) {
         }
         add {
             param("RELEASE_RUN_MODE", "")
-        }
-    }
-
-    expectSteps {
-        gradle {
-            name = "Execute E2E Test(s)"
-            tasks = "clean test -Drun.group=%RUN_MODE%"
-            buildFile = "e2e-tests/build.gradle"
-        }
-        script {
-            name = "Say Hello"
-            executionMode = BuildStep.ExecutionMode.ALWAYS
-
-            conditions {
-                startsWith("ZEPHYR_VERSION", "%")
-            }
-            scriptContent = "echo 'Say Hello'"
-        }
-    }
-    steps {
-        update<ScriptBuildStep>(1) {
-            clearConditions()
-
-            conditions {
-                matches("ZEPHYR_VERSION", "^[0-9]{2}")
-            }
         }
     }
 }
