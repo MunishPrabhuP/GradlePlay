@@ -8,7 +8,6 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.v2019_2.sequential
-import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.schedule
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.add
 import jetbrains.buildServer.configs.kotlin.v2019_2.version
 
@@ -197,7 +196,7 @@ object E2ETests : BuildType({
             executionMode = BuildStep.ExecutionMode.ALWAYS
 
             conditions {
-                doesNotEqual("RELEASE_VERSION", "")
+                matches("ZEPHYR_VERSION", "^[0-9]{2}\\.")
             }
             scriptContent = "echo 'Say Hello'"
         }
