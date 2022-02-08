@@ -186,6 +186,15 @@ object E2ETests : BuildType({
         }
     }
     steps {
+        script {
+            name = "Updating Build Number"
+            scriptContent =
+                """echo "##teamcity[buildNumber '%ZEPHYR_VERSION%']""""
+            conditions {
+                matches("ZEPHYR_VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+            }
+            executionMode = BuildStep.ExecutionMode.ALWAYS
+        }
         gradle {
             name = "Execute E2E Test(s)"
             tasks = "clean test -Drun.group=%RUN_MODE%"
@@ -194,7 +203,6 @@ object E2ETests : BuildType({
         script {
             name = "Say Hello"
             executionMode = BuildStep.ExecutionMode.ALWAYS
-
             conditions {
                 matches("ZEPHYR_VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
