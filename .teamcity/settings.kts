@@ -196,7 +196,7 @@ object E2ETests : BuildType({
             executionMode = BuildStep.ExecutionMode.ALWAYS
 
             conditions {
-                startsWith("ZEPHYR_VERSION", "%")
+                matches("ZEPHYR_VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
             scriptContent = "echo 'Say Hello'"
         }
