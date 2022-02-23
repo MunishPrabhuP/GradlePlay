@@ -174,9 +174,9 @@ object ReleaseCycleSetup : BuildType({
 
     params {
         text(
-            name = "%RELEASE_VERSION%",
-            value = "",
-            label = "VERSION",
+            name = "VERSION",
+            value = "%RELEASE_VERSION%",
+            label = "RELEASE VERSION",
             description = "Product Release Version (Ex.) 22.1.0",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
