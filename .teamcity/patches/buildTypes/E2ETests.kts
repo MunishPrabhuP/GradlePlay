@@ -11,16 +11,13 @@ accordingly, and delete the patch script.
 changeBuildType(RelativeId("E2ETests")) {
     params {
         add {
-            param("RELEASE_CYCLE", "")
-        }
-        add {
-            param("RELEASE_E2E_FOLDER", "")
-        }
-        add {
             param("RELEASE_VERSION", "")
         }
         add {
             param("RELEASE_RUN_MODE", "")
+        }
+        add {
+            param("RELEASE_E2E_FOLDER", "")
         }
     }
 }
