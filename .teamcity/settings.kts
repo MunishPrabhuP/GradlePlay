@@ -17,9 +17,9 @@ project {
     buildType(HealthCheck)
     buildType(E2ETests)
     buildType(APITests)
-    buildType(Release)
     buildType(UITests)
-    buildType(CustomTestRunner)
+    buildType(Release)
+    buildType(ReleaseCycleSetup)
 
     features {
         add {
@@ -46,6 +46,7 @@ project {
     }
     sequential {
         buildType(HealthCheck)
+        buildType(ReleaseCycleSetup)
         parallel {
             buildType(E2ETests)
             buildType(APITests)
@@ -91,33 +92,6 @@ object APITests : BuildType({
             readOnly = false,
             allowMultiple = false
         )
-        text(
-            name = "ZEPHYR_VERSION",
-            value = "%RELEASE_VERSION%",
-            label = "ZEPHYR TEST VERSION",
-            description = "Product Release Version (Ex.) 22.1.0",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = true
-        )
-        text(
-            name = "ZEPHYR_CYCLE",
-            value = "%RELEASE_CYCLE%",
-            label = "ZEPHYR TEST CYCLE",
-            description = "Test Execution Cycle",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = true
-        )
-        text(
-            name = "ZEPHYR_FOLDER",
-            value = "%RELEASE_API_FOLDER%",
-            label = "ZEPHYR TEST FOLDER",
-            description = "Test(s) Execution Folder",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = true
-        )
     }
     dependencies {
         snapshot(HealthCheck) {
@@ -152,33 +126,6 @@ object E2ETests : BuildType({
             readOnly = false,
             allowMultiple = false
         )
-        text(
-            name = "ZEPHYR_VERSION",
-            value = "%RELEASE_VERSION%",
-            label = "ZEPHYR TEST VERSION",
-            description = "Product Release Version (Ex.) 22.1.0",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = true
-        )
-        text(
-            name = "ZEPHYR_CYCLE",
-            value = "%RELEASE_CYCLE%",
-            label = "ZEPHYR TEST CYCLE",
-            description = "Test Execution Cycle",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = true
-        )
-        text(
-            name = "ZEPHYR_FOLDER",
-            value = "%RELEASE_E2E_FOLDER%",
-            label = "ZEPHYR TEST FOLDER",
-            description = "Test(s) Execution Folder",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = true
-        )
     }
     dependencies {
         snapshot(HealthCheck) {
@@ -186,27 +133,10 @@ object E2ETests : BuildType({
         }
     }
     steps {
-        script {
-            name = "Updating Build Number"
-            scriptContent =
-                """echo "##teamcity[buildNumber '%ZEPHYR_VERSION%']""""
-            conditions {
-                matches("ZEPHYR_VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
-            }
-            executionMode = BuildStep.ExecutionMode.ALWAYS
-        }
         gradle {
             name = "Execute E2E Test(s)"
             tasks = "clean test -Drun.group=%RUN_MODE%"
             buildFile = "e2e-tests/build.gradle"
-        }
-        script {
-            name = "Say Hello"
-            executionMode = BuildStep.ExecutionMode.ALWAYS
-            conditions {
-                matches("ZEPHYR_VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
-            }
-            scriptContent = "echo 'Say Hello'"
         }
     }
 })
@@ -228,35 +158,8 @@ object Release : BuildType({
         text(
             name = "reverse.dep.*.RELEASE_VERSION",
             value = "",
-            label = "ZEPHYR TEST VERSION",
+            label = "RELEASE VERSION",
             description = "Product Release Version (Ex.) 22.1.0",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = true
-        )
-        text(
-            name = "reverse.dep.*.RELEASE_CYCLE",
-            value = "",
-            label = "ZEPHYR TEST CYCLE",
-            description = "Test Execution Cycle",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = true
-        )
-        text(
-            name = "reverse.dep.*.RELEASE_E2E_FOLDER",
-            value = "",
-            label = "ZEPHYR E2E TEST FOLDER",
-            description = "E2E Test(s) Execution Folder",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = true
-        )
-        text(
-            name = "reverse.dep.*.RELEASE_API_FOLDER",
-            value = "",
-            label = "ZEPHYR API TEST FOLDER",
-            description = "API Test(s) Execution Folder",
             display = ParameterDisplay.PROMPT,
             readOnly = false,
             allowEmpty = true
@@ -310,56 +213,39 @@ object UITests : BuildType({
     }
 })
 
-object CustomTestRunner : BuildType({
-    name = "Custom Test Runner"
+object ReleaseCycleSetup : BuildType({
+    name = "Release Cycle Setup"
 
+    params {
+        text(
+            name = "%RELEASE_VERSION%",
+            value = "",
+            label = "VERSION",
+            description = "Product Release Version (Ex.) 22.1.0",
+            display = ParameterDisplay.PROMPT,
+            readOnly = false,
+            allowEmpty = true
+        )
+    }
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
-    params {
-        text(
-            name = "BRANCH",
-            value = "master",
-            label = "BRANCH",
-            description = "SCM/VCS Branch",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = false
-        )
-        text(
-            name = "RUN_ONLY",
-            value = "",
-            label = "RUN ONLY",
-            description = "To run Single Test : SampleE2ETests/com.demo.e2e.SampleE2ETests, To run all the Tests in a package - com.demo.e2e.*",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = false
-        )
-        select(
-            name = "TEST_TYPE",
-            value = "",
-            label = "TEST TYPE",
-            description = "Build File of the Test(s)",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowMultiple = false,
-            options = listOf("api-tests", "e2e-tests", "library")
-        )
-    }
     steps {
-        script {
-            name = "Fetching all Active Branch(s) from VCS"
-            scriptContent = "git fetch"
-        }
-        script {
-            name = "Checkout to Branch"
-            scriptContent = "git checkout %BRANCH%"
-        }
         gradle {
-            name = "Execute Test(s)"
-            tasks = "clean test --tests %RUN_ONLY%"
-            buildFile = "%TEST_TYPE%/build.gradle"
+            name = "Execute Health Check(s)"
+            conditions {
+                matches("%RELEASE_VERSION%", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+            }
+            tasks = "lib"
+            buildFile = "library/build.gradle"
+        }
+        script {
+            name = "Say Hello"
+            conditions {
+                matches("%RELEASE_VERSION%", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+            }
+            scriptContent = "java -jar ./jars/ReleaseCycleSetup.jar %VERSION%"
         }
     }
 })

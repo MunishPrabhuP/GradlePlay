@@ -21,3 +21,18 @@ test {
         events 'PASSED', 'SKIPPED', 'FAILED', 'STANDARD_OUT', 'STANDARD_ERROR'
     }
 }
+
+jar {
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    manifest {
+        attributes(
+                'Implementation-Title': 'Release Cycle Creation',
+                "Main-Class": 'scripts.ReleaseCycleSetup'
+        )
+    }
+    destinationDirectory = file("$rootDir/jars")
+    archivesBaseName = 'ReleaseCycleSetup'
+    version(null)
+}
