@@ -159,13 +159,14 @@ object E2ETests : BuildType({
         }
     }
     steps {
-        script {
+        exec {
             name = "Updating Build Number"
-            scriptContent =
-                """echo "##teamcity[buildNumber '%VERSION%']""""
+            path = "make"
+            arguments = "update-build-number RELEASE_VERSION=%VERSION%"
             conditions {
                 matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
+            executionMode = BuildStep.ExecutionMode.ALWAYS
         }
         gradle {
             name = "Execute E2E Test(s)"
@@ -200,13 +201,14 @@ object Release : BuildType({
         )
     }
     steps {
-        script {
+        exec {
             name = "Updating Build Number"
-            scriptContent =
-                """echo "##teamcity[buildNumber '%reverse.dep.*.RELEASE_VERSION%']""""
+            path = "make"
+            arguments = "update-build-number RELEASE_VERSION=%reverse.dep.*.RELEASE_VERSION%"
             conditions {
-                matches("reverse.dep.*.RELEASE_VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+                matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
+            executionMode = BuildStep.ExecutionMode.ALWAYS
         }
         script {
             scriptContent = """echo "Executing %reverse.dep.*.RELEASE_RUN_MODE% suite""""
@@ -233,6 +235,15 @@ object ReleaseCycleSetup : BuildType({
         cleanCheckout = true
     }
     steps {
+        exec {
+            name = "Updating Build Number"
+            path = "make"
+            arguments = "update-build-number RELEASE_VERSION=%VERSION%"
+            conditions {
+                matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+            }
+            executionMode = BuildStep.ExecutionMode.ALWAYS
+        }
         gradle {
             name = "Creating JAR"
             conditions {
