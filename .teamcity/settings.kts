@@ -44,7 +44,7 @@ project {
     }
     sequential {
         buildType(HealthCheck)
-//        buildType(ReleaseCycleSetup)
+        buildType(ReleaseCycleSetup)
         parallel {
             buildType(E2ETests)
             buildType(APITests)
