@@ -89,6 +89,15 @@ object APITests : BuildType({
             readOnly = false,
             allowMultiple = false
         )
+        text(
+            name = "VERSION",
+            value = "%RELEASE_VERSION%",
+            label = "RELEASE VERSION",
+            description = "Product Release Version (Ex.) 22.1.0",
+            display = ParameterDisplay.HIDDEN,
+            readOnly = true,
+            allowEmpty = true
+        )
     }
     dependencies {
         snapshot(HealthCheck) {
@@ -96,6 +105,14 @@ object APITests : BuildType({
         }
     }
     steps {
+        script {
+            name = "Updating Build Number"
+            scriptContent =
+                """echo "##teamcity[buildNumber '%VERSION%']""""
+            conditions {
+                matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+            }
+        }
         gradle {
             name = "Execute API Test(s)"
             tasks = "clean test -Drun.group=%RUN_MODE%"
@@ -123,6 +140,15 @@ object E2ETests : BuildType({
             readOnly = false,
             allowMultiple = false
         )
+        text(
+            name = "VERSION",
+            value = "%RELEASE_VERSION%",
+            label = "RELEASE VERSION",
+            description = "Product Release Version (Ex.) 22.1.0",
+            display = ParameterDisplay.HIDDEN,
+            readOnly = true,
+            allowEmpty = true
+        )
     }
     dependencies {
         snapshot(HealthCheck) {
@@ -130,6 +156,14 @@ object E2ETests : BuildType({
         }
     }
     steps {
+        script {
+            name = "Updating Build Number"
+            scriptContent =
+                """echo "##teamcity[buildNumber '%VERSION%']""""
+            conditions {
+                matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+            }
+        }
         gradle {
             name = "Execute E2E Test(s)"
             tasks = "clean test -Drun.group=%RUN_MODE%"
@@ -164,6 +198,14 @@ object Release : BuildType({
     }
     steps {
         script {
+            name = "Updating Build Number"
+            scriptContent =
+                """echo "##teamcity[buildNumber '%reverse.dep.*.RELEASE_VERSION%']""""
+            conditions {
+                matches("reverse.dep.*.RELEASE_VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+            }
+        }
+        script {
             scriptContent = """echo "Executing %reverse.dep.*.RELEASE_RUN_MODE% suite""""
         }
     }
@@ -189,7 +231,7 @@ object ReleaseCycleSetup : BuildType({
     }
     steps {
         gradle {
-            name = "Execute Health Check(s)"
+            name = "Creating JAR"
             conditions {
                 matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
@@ -197,7 +239,7 @@ object ReleaseCycleSetup : BuildType({
             buildFile = "library/build.gradle"
         }
         script {
-            name = "Say Hello"
+            name = "Creating Release Cycle Setup"
             conditions {
                 matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
