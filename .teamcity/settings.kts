@@ -108,6 +108,12 @@ object APITests : BuildType({
     }
     steps {
         exec {
+            name = "Updating TEAMCITY_BUILDCONF_NAME Environment Variable"
+            path = "make"
+            arguments = "update-teamcity_buildconf_name-env-variable BUILDCONF_NAME=Levitate LIC E2E %RUN_MODE% Tests"
+            executionMode = BuildStep.ExecutionMode.ALWAYS
+        }
+        exec {
             name = "Updating Build Number"
             path = "make"
             arguments = "update-build-number RELEASE_VERSION=%VERSION%"
@@ -201,15 +207,6 @@ object Release : BuildType({
         )
     }
     steps {
-        exec {
-            name = "Updating Build Number"
-            path = "make"
-            arguments = "update-build-number RELEASE_VERSION=%reverse.dep.*.RELEASE_VERSION%"
-            conditions {
-                matches("reverse.dep.*.RELEASE_VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
-            }
-            executionMode = BuildStep.ExecutionMode.ALWAYS
-        }
         script {
             scriptContent = """echo "Executing %reverse.dep.*.RELEASE_RUN_MODE% suite""""
         }

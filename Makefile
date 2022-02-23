@@ -18,5 +18,5 @@ publish-test-results:
 update-build-number:
 	echo "##teamcity[buildNumber '$(RELEASE_VERSION)']"
 
-update-TEAMCITY_BUILDCONF_NAME-env-variable:
+update-teamcity_buildconf_name-env-variable:
 	echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value='$(BUILDCONF_NAME)']"
