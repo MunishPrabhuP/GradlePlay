@@ -196,7 +196,7 @@ object ReleaseCycleSetup : BuildType({
         gradle {
             name = "Execute Health Check(s)"
             conditions {
-                matches("%VERSION%", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+                matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
             tasks = "jar"
             buildFile = "library/build.gradle"
@@ -204,7 +204,7 @@ object ReleaseCycleSetup : BuildType({
         script {
             name = "Say Hello"
             conditions {
-                matches("%VERSION%", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+                matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
             scriptContent = "java -jar ./jars/ReleaseCycleSetup.jar %VERSION%"
         }
