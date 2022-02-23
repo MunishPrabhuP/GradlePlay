@@ -187,11 +187,6 @@ object ReleaseCycleSetup : BuildType({
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
-    dependencies {
-        snapshot(HealthCheck) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-        }
-    }
     steps {
         gradle {
             name = "Execute Health Check(s)"
