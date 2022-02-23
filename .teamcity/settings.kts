@@ -1,9 +1,7 @@
-import jetbrains.buildServer.configs.kotlin.v2019_2.BuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2019_2.FailureAction
 import jetbrains.buildServer.configs.kotlin.v2019_2.ParameterDisplay
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.exec
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
@@ -107,20 +105,13 @@ object APITests : BuildType({
         }
     }
     steps {
-        exec {
-            name = "Updating TEAMCITY_BUILDCONF_NAME Environment Variable"
-            path = "make"
-            arguments = "update-teamcity_buildconf_name-env-variable BUILDCONF_NAME=Levitate LIC E2E %RUN_MODE% Tests"
-            executionMode = BuildStep.ExecutionMode.ALWAYS
-        }
-        exec {
+        script {
             name = "Updating Build Number"
-            path = "make"
-            arguments = "update-build-number RELEASE_VERSION=%VERSION%"
+            scriptContent =
+                """echo "##teamcity[buildNumber '%VERSION%']""""
             conditions {
                 matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
-            executionMode = BuildStep.ExecutionMode.ALWAYS
         }
         gradle {
             name = "Execute API Test(s)"
