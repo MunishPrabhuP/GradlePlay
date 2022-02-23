@@ -1,7 +1,9 @@
+import jetbrains.buildServer.configs.kotlin.v2019_2.BuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2019_2.FailureAction
 import jetbrains.buildServer.configs.kotlin.v2019_2.ParameterDisplay
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.exec
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
@@ -105,13 +107,14 @@ object APITests : BuildType({
         }
     }
     steps {
-        script {
+        exec {
             name = "Updating Build Number"
-            scriptContent =
-                """echo "##teamcity[buildNumber '%VERSION%']""""
+            path = "make"
+            arguments = "update-build-number RELEASE_VERSION=%VERSION%"
             conditions {
                 matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
+            executionMode = BuildStep.ExecutionMode.ALWAYS
         }
         gradle {
             name = "Execute API Test(s)"
