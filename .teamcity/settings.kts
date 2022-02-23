@@ -44,7 +44,7 @@ project {
     }
     sequential {
         buildType(HealthCheck)
-        buildType(ReleaseCycleSetup)
+//        buildType(ReleaseCycleSetup)
         parallel {
             buildType(E2ETests)
             buildType(APITests)
@@ -186,6 +186,11 @@ object ReleaseCycleSetup : BuildType({
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
+    }
+    dependencies {
+        snapshot(HealthCheck) {
+            onDependencyFailure = FailureAction.FAIL_TO_START
+        }
     }
     steps {
         gradle {
