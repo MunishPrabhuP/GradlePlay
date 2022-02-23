@@ -198,7 +198,7 @@ object ReleaseCycleSetup : BuildType({
 //            conditions {
 //                matches("%RELEASE_VERSION%", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
 //            }
-            tasks = "lib"
+            tasks = "jar"
             buildFile = "library/build.gradle"
         }
         script {
