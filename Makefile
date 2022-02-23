@@ -19,4 +19,4 @@ update-build-number:
 	echo "##teamcity[buildNumber '$(RELEASE_VERSION)']"
 
 update-teamcity_buildconf_name-env-variable:
-	echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value='$(BUILDCONF_NAME)']"
+	echo "##teamcity[setParameter name='env.TEAMCITY_BUILDCONF_NAME' value=$(BUILDCONF_NAME)]"
