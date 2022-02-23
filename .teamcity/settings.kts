@@ -206,7 +206,7 @@ object Release : BuildType({
             path = "make"
             arguments = "update-build-number RELEASE_VERSION=%reverse.dep.*.RELEASE_VERSION%"
             conditions {
-                matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+                matches("reverse.dep.*.RELEASE_VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
             executionMode = BuildStep.ExecutionMode.ALWAYS
         }
