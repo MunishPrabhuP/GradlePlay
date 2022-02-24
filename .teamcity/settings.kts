@@ -214,16 +214,16 @@ object Release : BuildType({
     }
     steps {
         script {
-            scriptContent = """echo "Executing %reverse.dep.*.RELEASE_RUN_MODE% suite""""
-        }
-        exec {
             name = "Updating Build Number"
-            path = "make"
-            arguments = "update-build-number RELEASE_VERSION=%reverse.dep.*.RELEASE_VERSION%"
+            scriptContent =
+                """echo "##teamcity[buildNumber '%reverse.dep.*.RELEASE_VERSION%']""""
             conditions {
                 matches("reverse.dep.*.RELEASE_VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
             }
             executionMode = BuildStep.ExecutionMode.ALWAYS
+        }
+        script {
+            scriptContent = """echo "Executing %reverse.dep.*.RELEASE_RUN_MODE% suite""""
         }
     }
 })
