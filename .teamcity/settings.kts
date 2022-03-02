@@ -87,7 +87,7 @@ object APITests : BuildType({
             label = "RUN MODE",
             description = "Test(s) Run Mode",
             display = ParameterDisplay.PROMPT,
-            options = listOf("Comprehensive", "Sanity"),
+            options = listOf("1-Sanity", "2-Comprehensive"),
             readOnly = false,
             allowMultiple = false
         )
@@ -145,7 +145,7 @@ object E2ETests : BuildType({
             label = "RUN MODE",
             description = "Test(s) Run Mode",
             display = ParameterDisplay.PROMPT,
-            options = listOf("Comprehensive", "Sanity"),
+            options = listOf("1-Sanity", "2-Comprehensive"),
             readOnly = false,
             allowMultiple = false
         )
@@ -198,7 +198,7 @@ object Release : BuildType({
             label = "RUN MODE",
             description = "Test(s) Run Mode",
             display = ParameterDisplay.PROMPT,
-            options = listOf("Comprehensive", "Sanity"),
+            options = listOf("1-Sanity", "2-Comprehensive"),
             readOnly = false,
             allowMultiple = false
         )
