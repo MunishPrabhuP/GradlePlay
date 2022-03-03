@@ -111,7 +111,7 @@ object APITests : BuildType({
             name = "Updating TEAMCITY_BUILDCONF_NAME Environment Variable"
             path = "make"
 //            arguments = "update-teamcity_buildconf_name-env-variable BUILDCONF_NAME='Levitate LIC API %RUN_MODE% Tests'"
-            arguments = "update-teamcity_buildconf_name-env-variable BUILDCONF_NAME=api-tests"
+            arguments = "update-teamcity_buildconf_name-env-variable BUILDCONF_NAME=%VERSION%"
             executionMode = BuildStep.ExecutionMode.ALWAYS
         }
         exec {
@@ -169,8 +169,7 @@ object E2ETests : BuildType({
         exec {
             name = "Updating TEAMCITY_BUILDCONF_NAME Environment Variable"
             path = "make"
-//            arguments = "update-teamcity_buildconf_name-env-variable BUILDCONF_NAME='Levitate LIC E2E %RUN_MODE% Tests'"
-            arguments = "update-teamcity_buildconf_name-env-variable BUILDCONF_NAME=API/E2E-Automated"
+            arguments = "update-teamcity_buildconf_name-env-variable BUILDCONF_NAME='Levitate LIC E2E %RUN_MODE% Tests'"
             executionMode = BuildStep.ExecutionMode.ALWAYS
         }
         exec {
