@@ -38,6 +38,7 @@ changeBuildType(RelativeId("E2ETests")) {
     steps {
         insert(3) {
             script {
+                enabled = false
                 scriptContent = """echo "${'$'}pwd""""
             }
         }
