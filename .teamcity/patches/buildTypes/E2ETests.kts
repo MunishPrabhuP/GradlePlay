@@ -41,7 +41,7 @@ changeBuildType(RelativeId("E2ETests")) {
                 scriptContent = """
                     echo ${'$'}pwd
                     echo %teamcity.build.checkoutDir%
-                    ls
+                    ls "%teamcity.build.checkoutDir%/api-tests"
                 """.trimIndent()
             }
         }
