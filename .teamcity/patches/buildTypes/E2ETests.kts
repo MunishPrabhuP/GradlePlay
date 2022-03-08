@@ -40,6 +40,7 @@ changeBuildType(RelativeId("E2ETests")) {
             script {
                 scriptContent = """
                     echo ${'$'}pwd
+                    echo %teamcity.build.checkoutDir%
                     ls
                 """.trimIndent()
             }
