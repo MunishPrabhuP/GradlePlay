@@ -38,7 +38,7 @@ changeBuildType(RelativeId("E2ETests")) {
     steps {
         insert(3) {
             script {
-                scriptContent = "echo ${'$'}pwd"
+                scriptContent = """echo "${'$'}pwd""""
             }
         }
     }
