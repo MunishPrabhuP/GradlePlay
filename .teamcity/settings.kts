@@ -69,6 +69,11 @@ object HealthCheck : BuildType({
             tasks = "clean test --tests com.demo.e2e.HealthCheck"
             buildFile = "library/build.gradle"
         }
+        script {
+            name = "Checking variable assignment"
+            val ENVIRONMENT = "Diablo-Master"
+            scriptContent = "echo %ENVIRONMENT%"
+        }
     }
 })
 
