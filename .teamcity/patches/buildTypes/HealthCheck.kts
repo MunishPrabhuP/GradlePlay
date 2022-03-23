@@ -22,7 +22,7 @@ changeBuildType(RelativeId("HealthCheck")) {
         insert(1) {
             script {
                 scriptContent = """
-                    set ENVIRONMENT=Alameda
+                    set ENVIRONMENT="Alameda"
                     echo %%ENVIRONMENT%%
                 """.trimIndent()
             }
