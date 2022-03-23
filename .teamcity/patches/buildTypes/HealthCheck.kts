@@ -21,7 +21,6 @@ changeBuildType(RelativeId("HealthCheck")) {
     steps {
         insert(1) {
             script {
-                enabled = false
                 scriptContent = """
                     set ENVIRONMENT=Alameda
                     echo %%ENVIRONMENT%%
