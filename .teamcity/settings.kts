@@ -198,7 +198,7 @@ object E2ETests : BuildType({
 })
 
 object Release : BuildType({
-    name = "Product Release"
+    name = "Product Release C1"
 
     params {
         select(
@@ -243,6 +243,13 @@ object PRChecks : BuildType({
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
+    }
+    steps {
+        gradle {
+            name = "Execute PR Check(s)"
+            tasks = "clean test --tests com.demo.e2e.PRCheck"
+            buildFile = "library/build.gradle"
+        }
     }
     triggers {
         vcs {
