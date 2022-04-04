@@ -3,23 +3,27 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2019_2.FailureAction
 import jetbrains.buildServer.configs.kotlin.v2019_2.ParameterDisplay
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.PullRequests
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.commitStatusPublisher
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.exec
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.v2019_2.sequential
+import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.add
 import jetbrains.buildServer.configs.kotlin.v2019_2.version
 
 version = "2020.1"
 
 project {
+    buildType(PRChecks)
     buildType(HealthCheck)
     buildType(E2ETests)
     buildType(APITests)
     buildType(Release)
-    buildType(ReleaseCycleSetup)
 
     features {
         add {
@@ -46,7 +50,6 @@ project {
     }
     sequential {
         buildType(HealthCheck)
-        buildType(ReleaseCycleSetup)
         parallel {
             buildType(E2ETests)
             buildType(APITests)
@@ -234,48 +237,38 @@ object Release : BuildType({
     }
 })
 
-object ReleaseCycleSetup : BuildType({
-    name = "Release Cycle Setup"
+object PRChecks : BuildType({
+    name = "Pull Request Checks"
 
-    params {
-        text(
-            name = "VERSION",
-            value = "%RELEASE_VERSION%",
-            label = "RELEASE VERSION",
-            description = "Product Release Version (Ex.) 22.1.0",
-            display = ParameterDisplay.PROMPT,
-            readOnly = false,
-            allowEmpty = true
-        )
-    }
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
-    steps {
-        exec {
-            name = "Updating Build Number"
-            path = "make"
-            arguments = "update-build-number RELEASE_VERSION=%VERSION%"
-            conditions {
-                matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
-            }
-            executionMode = BuildStep.ExecutionMode.ALWAYS
+    triggers {
+        vcs {
+            branchFilter = "+:pull-requests/*"
         }
-        gradle {
-            name = "Creating JAR"
-            conditions {
-                matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+    }
+
+    features {
+        pullRequests {
+            vcsRootExtId = "IdeaImplementation_HttpsGithubComMunishPrabhuPGradlePlayRefsHeadsMaster"
+            provider = github {
+                authType = token {
+                    token = "credentialsJSON:a501b077-abfa-4103-b50a-24850da66bcc"
+                }
+                filterTargetBranch = "refs/heads/master"
+                filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
             }
-            tasks = "jar"
-            buildFile = "library/build.gradle"
         }
-        script {
-            name = "Creating Release Cycle Setup"
-            conditions {
-                matches("VERSION", "^[0-9]{2}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+        commitStatusPublisher {
+            vcsRootExtId = "IdeaImplementation_HttpsGithubComMunishPrabhuPGradlePlayRefsHeadsMaster"
+            publisher = github {
+                githubUrl = "https://api.github.com"
+                authType = personalToken {
+                    token = "credentialsJSON:a501b077-abfa-4103-b50a-24850da66bcc"
+                }
             }
-            scriptContent = "java -jar ./jars/ReleaseCycleSetup.jar %VERSION%"
         }
     }
 })
