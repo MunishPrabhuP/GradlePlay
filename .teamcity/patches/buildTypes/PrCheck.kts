@@ -2,6 +2,8 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.PullRequests
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
@@ -20,6 +22,19 @@ create(DslContext.projectId, BuildType({
 
     triggers {
         vcs {
+        }
+    }
+
+    features {
+        pullRequests {
+            vcsRootExtId = "IdeaImplementation_HttpsGithubComMunishPrabhuPGradlePlayRefsHeadsMaster"
+            provider = github {
+                authType = token {
+                    token = "credentialsJSON:a501b077-abfa-4103-b50a-24850da66bcc"
+                }
+                filterTargetBranch = "refs/heads/master"
+                filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
+            }
         }
     }
 }))
