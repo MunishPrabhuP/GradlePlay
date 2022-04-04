@@ -72,7 +72,7 @@ object HealthCheck : BuildType({
         script {
             name = "Checking variable assignment"
             val ENVIRONMENT = "Diablo-Master"
-            scriptContent = "echo %ENVIRONMENT%"
+            scriptContent = "echo "
         }
     }
 })
@@ -235,7 +235,7 @@ object Release : BuildType({
 })
 
 object ReleaseCycleSetup : BuildType({
-    name = "Release Cycle Setup"
+    name = "Release Cycle Setup C1"
 
     params {
         text(
