@@ -244,6 +244,13 @@ object PRChecks : BuildType({
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
+    steps {
+        gradle {
+            name = "Execute PR Check(s)"
+            tasks = "clean test --tests com.demo.e2e.PRCheck"
+            buildFile = "library/build.gradle"
+        }
+    }
     triggers {
         vcs {
             branchFilter = "+:pull-requests/*"
