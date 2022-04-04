@@ -198,7 +198,7 @@ object E2ETests : BuildType({
 })
 
 object Release : BuildType({
-    name = "Product Release"
+    name = "Product Release C1"
 
     params {
         select(
