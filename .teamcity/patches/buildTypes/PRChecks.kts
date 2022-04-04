@@ -2,7 +2,9 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.CommitStatusPublisher
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.PullRequests
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.commitStatusPublisher
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
 /*
@@ -12,7 +14,22 @@ accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("PRChecks")) {
     features {
-        val feature1 = find<CommitStatusPublisher> {
+        val feature1 = find<PullRequests> {
+            pullRequests {
+                vcsRootExtId = "IdeaImplementation_HttpsGithubComMunishPrabhuPGradlePlayRefsHeadsMaster"
+                provider = github {
+                    authType = token {
+                        token = "credentialsJSON:a501b077-abfa-4103-b50a-24850da66bcc"
+                    }
+                    filterTargetBranch = "refs/heads/master"
+                    filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
+                }
+            }
+        }
+        feature1.apply {
+            vcsRootExtId = "${DslContext.settingsRoot.id}"
+        }
+        val feature2 = find<CommitStatusPublisher> {
             commitStatusPublisher {
                 vcsRootExtId = "IdeaImplementation_HttpsGithubComMunishPrabhuPGradlePlayRefsHeadsMaster"
                 publisher = github {
@@ -23,7 +40,7 @@ changeBuildType(RelativeId("PRChecks")) {
                 }
             }
         }
-        feature1.apply {
+        feature2.apply {
             vcsRootExtId = "${DslContext.settingsRoot.id}"
         }
     }
