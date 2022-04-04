@@ -253,7 +253,7 @@ object PRChecks : BuildType({
     }
     triggers {
         vcs {
-            branchFilter = "+:pull-requests/*"
+
         }
     }
 
