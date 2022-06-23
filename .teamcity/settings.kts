@@ -49,6 +49,7 @@ project {
         parallel {
             buildType(E2ETests)
             buildType(APITests)
+            buildType(Visual)
         }
         buildType(Release)
     }
@@ -206,14 +207,15 @@ object Visual : BuildType({
         }
     }
     steps {
-    gradle {
-        name = "Execute Visual Tests"
-        executionMode = BuildStep.ExecutionMode.ALWAYS
-        tasks = "clean test --tests com.demo.e2e.SampleVisualTests"
-        buildFile = "visual/build.gradle"
-        dockerImage = "selenium/standalone-chrome:3.141.59"
-        dockerRunParameters = "-d -p 4445:4444 -v /dev/shm:/dev/shm"
-    }}
+        gradle {
+            name = "Execute Visual Tests"
+            executionMode = BuildStep.ExecutionMode.ALWAYS
+            tasks = "clean test --tests com.demo.e2e.SampleVisualTests"
+            buildFile = "visual/build.gradle"
+            dockerImage = "selenium/standalone-chrome:3.141.59"
+            dockerRunParameters = "-d -p 4445:4444 -v /dev/shm:/dev/shm"
+        }
+    }
 })
 
 object Release : BuildType({
