@@ -2,4 +2,5 @@ rootProject.name = 'GradlePlay'
 include 'e2e-tests'
 include 'api-tests'
 include 'library'
+include 'visual'
 

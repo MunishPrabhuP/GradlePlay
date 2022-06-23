@@ -19,10 +19,10 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.version
 version = "2020.1"
 
 project {
-    buildType(PRChecks)
     buildType(HealthCheck)
     buildType(E2ETests)
     buildType(APITests)
+    buildType(Visual)
     buildType(Release)
 
     features {
@@ -197,6 +197,29 @@ object E2ETests : BuildType({
     }
 })
 
+object Visual : BuildType({
+    name = "Visual Tests"
+
+    vcs {
+        root(DslContext.settingsRoot)
+        cleanCheckout = true
+    }
+    dependencies {
+        snapshot(HealthCheck) {
+            onDependencyFailure = FailureAction.FAIL_TO_START
+        }
+    }
+    steps {
+    gradle {
+        name = "Execute Visual Tests"
+        executionMode = BuildStep.ExecutionMode.ALWAYS
+        tasks = "clean test --tests com.demo.e2e.SampleVisualTests"
+        buildFile = "visual/build.gradle"
+        dockerImage = "selenium/standalone-chrome:3.141.59"
+        dockerRunParameters = "-d -p 4445:4444 -v /dev/shm:/dev/shm"
+    }}
+})
+
 object Release : BuildType({
     name = "Product Release"
 
@@ -233,42 +256,6 @@ object Release : BuildType({
         }
         script {
             scriptContent = """echo "Executing %reverse.dep.*.RELEASE_RUN_MODE% suite""""
-        }
-    }
-})
-
-object PRChecks : BuildType({
-    name = "Pull Request Checks"
-
-    vcs {
-        root(DslContext.settingsRoot)
-        cleanCheckout = true
-    }
-    triggers {
-        vcs {
-
-        }
-    }
-
-    features {
-        pullRequests {
-            vcsRootExtId = "IdeaImplementation_HttpsGithubComMunishPrabhuPGradlePlayRefsHeadsMaster"
-            provider = github {
-                authType = token {
-                    token = "credentialsJSON:a501b077-abfa-4103-b50a-24850da66bcc"
-                }
-                filterTargetBranch = "refs/heads/master"
-                filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
-            }
-        }
-        commitStatusPublisher {
-            vcsRootExtId = "IdeaImplementation_HttpsGithubComMunishPrabhuPGradlePlayRefsHeadsMaster"
-            publisher = github {
-                githubUrl = "https://api.github.com"
-                authType = personalToken {
-                    token = "credentialsJSON:a501b077-abfa-4103-b50a-24850da66bcc"
-                }
-            }
         }
     }
 })

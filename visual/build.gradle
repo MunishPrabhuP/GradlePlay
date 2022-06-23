@@ -10,14 +10,15 @@ repositories {
 }
 
 dependencies {
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.141.59'
     implementation group: 'org.testng', name: 'testng', version: '7.3.0'
 }
 
 test {
     useTestNG() {
-
+        suites 'src/test/resources/visual.xml'
     }
     testLogging {
-        events "PASSED", "SKIPPED", "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
+        events 'PASSED', 'FAILED', 'SKIPPED', 'STANDARD_OUT', 'STANDARD_ERROR'
     }
 }
