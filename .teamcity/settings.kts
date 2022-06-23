@@ -49,7 +49,7 @@ project {
         parallel {
             buildType(E2ETests)
             buildType(APITests)
-            buildType(Visual)
+//            buildType(Visual)
         }
         buildType(Release)
     }
