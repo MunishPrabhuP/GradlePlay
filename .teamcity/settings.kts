@@ -196,11 +196,6 @@ object Visual : BuildType({
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
-    dependencies {
-        snapshot(HealthCheck) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-        }
-    }
     steps {
         gradle {
             name = "Execute Visual Tests"
