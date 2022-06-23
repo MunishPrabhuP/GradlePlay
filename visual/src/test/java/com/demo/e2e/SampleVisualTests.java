@@ -32,7 +32,7 @@ public class SampleVisualTests {
         chromeOptions.merge(capabilities);
         hostURL = "http://localhost:4445/wd/hub";
         driver = new RemoteWebDriver(new URL(hostURL), chromeOptions);
-        driver.get("https://en.wikipedia.org/wiki/Chuck_Robbins");
+        driver.get("https://www.google.com/");
         System.out.println("Title:" + driver.getTitle());
     }
 }
