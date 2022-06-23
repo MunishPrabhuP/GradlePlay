@@ -43,13 +43,6 @@ project {
                 startPage = "health-check/reports/tests/test/index.html"
             }
         }
-        add {
-            buildReportTab {
-                id = "PROJECT_EXT_5"
-                title = "Visual Report"
-                startPage = "visual/reports/tests/test/index.html"
-            }
-        }
     }
     sequential {
         buildType(HealthCheck)
@@ -198,7 +191,6 @@ object E2ETests : BuildType({
 
 object Visual : BuildType({
     name = "Visual Tests"
-    artifactRules = "visual/build/reports/ => visual/reports/"
 
     vcs {
         root(DslContext.settingsRoot)
