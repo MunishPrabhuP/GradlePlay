@@ -203,7 +203,7 @@ object Visual : BuildType({
             tasks = "clean test --tests com.demo.e2e.SampleVisualTests"
             buildFile = "visual/build.gradle"
             dockerImage = "selenium/standalone-chrome:3.141.59"
-            dockerRunParameters = "-d -p 4445:4444 -v /dev/shm:/dev/shm"
+            dockerRunParameters = "--name visual-container -d -p 4445:4444 -v /Users/mparaman/Desktop/SeleniumChrome:/dev/shm"
         }
     }
 })
