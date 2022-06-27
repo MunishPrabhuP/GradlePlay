@@ -24,6 +24,7 @@ changeBuildType(RelativeId("Visual")) {
     steps {
         update<GradleBuildStep>(0) {
             clearConditions()
+            dockerImage = ""
             dockerRunParameters = "--name visual-container -d -p 4445:4444 -v /dev/shm:/dev/shm"
         }
     }
