@@ -39,7 +39,7 @@ changeBuildType(RelativeId("Visual")) {
             gradle {
                 tasks = "clean test --tests com.demo.e2e.SampleVisualTests"
                 buildFile = "visual/build.gradle"
-                dockerImage = "selenium/standalone-chrome:3.141.59"
+                dockerImage = "selenium/standalone-chrome:latest"
                 dockerRunParameters = "-p 4445:4445 -p 4446:4446 --name visual_automation"
             }
         }
