@@ -2,6 +2,7 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.GradleBuildStep
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
@@ -26,6 +27,10 @@ changeBuildType(RelativeId("Visual")) {
         }
     }
     steps {
+        update<ScriptBuildStep>(0) {
+            enabled = false
+            clearConditions()
+        }
         update<GradleBuildStep>(1) {
             enabled = false
             clearConditions()
