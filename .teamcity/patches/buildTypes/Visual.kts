@@ -26,7 +26,7 @@ changeBuildType(RelativeId("Visual")) {
         insert(0) {
             script {
                 name = "Starting Container"
-                scriptContent = "docker run -d -p 4445:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome"
+                scriptContent = "docker run -d -p 4445:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome:3.141.59"
             }
         }
         update<GradleBuildStep>(1) {
