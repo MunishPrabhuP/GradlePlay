@@ -30,6 +30,7 @@ changeBuildType(RelativeId("Visual")) {
             }
         }
         update<GradleBuildStep>(1) {
+            executionMode = BuildStep.ExecutionMode.DEFAULT
             clearConditions()
             dockerImage = ""
             dockerRunParameters = "--name visual-container -d -p 4445:4444 -v /dev/shm:/dev/shm"
