@@ -38,6 +38,13 @@ project {
         }
         add {
             buildReportTab {
+                id = "PROJECT_EXT_5"
+                title = "Visual Report"
+                startPage = "visual/reports/tests/test/index.html"
+            }
+        }
+        add {
+            buildReportTab {
                 id = "PROJECT_EXT_4"
                 title = "HealthCheck Report"
                 startPage = "health-check/reports/tests/test/index.html"
@@ -191,19 +198,23 @@ object E2ETests : BuildType({
 
 object Visual : BuildType({
     name = "Visual Tests"
+    artifactRules = "visual/build/reports/ => visual/reports/"
 
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
     steps {
+        script {
+            name = "Starting Container"
+            executionMode = BuildStep.ExecutionMode.ALWAYS
+            scriptContent = "docker run -d -p 4445:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome:3.141.59"
+        }
         gradle {
             name = "Execute Visual Tests"
-            executionMode = BuildStep.ExecutionMode.ALWAYS
+            executionMode = BuildStep.ExecutionMode.RUN_ON_SUCCESS
             tasks = "clean test --tests com.demo.e2e.SampleVisualTests"
             buildFile = "visual/build.gradle"
-            dockerImage = "selenium/standalone-chrome:3.141.59"
-            dockerRunParameters = "--name visual-container -d -p 4445:4444"
         }
     }
 })
