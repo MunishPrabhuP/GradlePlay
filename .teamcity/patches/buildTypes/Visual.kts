@@ -1,6 +1,7 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.GradleBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
@@ -25,6 +26,10 @@ changeBuildType(RelativeId("Visual")) {
         }
     }
     steps {
+        update<GradleBuildStep>(1) {
+            enabled = false
+            clearConditions()
+        }
         insert(2) {
             gradle {
                 tasks = "clean test --tests com.demo.e2e.SampleVisualTests"
