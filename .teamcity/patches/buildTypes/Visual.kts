@@ -3,6 +3,7 @@ package patches.buildTypes
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.GradleBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
 /*
@@ -26,6 +27,12 @@ changeBuildType(RelativeId("Visual")) {
             clearConditions()
             dockerImage = ""
             dockerRunParameters = "--name visual-container -d -p 4445:4444 -v /dev/shm:/dev/shm"
+        }
+        insert(1) {
+            script {
+                name = "Starting Container"
+                scriptContent = "docker run -d -p 4445:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome"
+            }
         }
     }
 }
