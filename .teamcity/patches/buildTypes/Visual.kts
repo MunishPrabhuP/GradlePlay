@@ -23,16 +23,16 @@ changeBuildType(RelativeId("Visual")) {
         }
     }
     steps {
-        update<GradleBuildStep>(0) {
-            clearConditions()
-            dockerImage = ""
-            dockerRunParameters = "--name visual-container -d -p 4445:4444 -v /dev/shm:/dev/shm"
-        }
-        insert(1) {
+        insert(0) {
             script {
                 name = "Starting Container"
                 scriptContent = "docker run -d -p 4445:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome"
             }
+        }
+        update<GradleBuildStep>(1) {
+            clearConditions()
+            dockerImage = ""
+            dockerRunParameters = "--name visual-container -d -p 4445:4444 -v /dev/shm:/dev/shm"
         }
     }
 }
