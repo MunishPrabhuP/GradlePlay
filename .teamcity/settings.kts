@@ -208,7 +208,7 @@ object Visual : BuildType({
         script {
             name = "Starting Container"
             executionMode = BuildStep.ExecutionMode.ALWAYS
-            scriptContent = "docker run -d -p 4445:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome:3.141.59"
+            scriptContent = "docker run --user \$(id -u) -d -p 4445:4445 -v /dev/shm:/dev/shm selenium/standalone-chrome:3.141.59"
         }
         gradle {
             name = "Execute Visual Tests"
