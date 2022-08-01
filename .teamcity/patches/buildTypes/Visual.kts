@@ -37,17 +37,17 @@ changeBuildType(RelativeId("Visual")) {
             clearConditions()
         }
         insert(2) {
+            dockerCompose {
+                name = "Docker Compose"
+                forcePull = true
+            }
+        }
+        insert(3) {
             gradle {
                 tasks = "clean test --tests com.demo.e2e.SampleVisualTests"
                 buildFile = "visual/build.gradle"
                 dockerImage = "selenium/standalone-chrome:latest"
                 dockerRunParameters = "-p 4445:4445 -p 4446:4446 --name visual_automation"
-            }
-        }
-        insert(3) {
-            dockerCompose {
-                name = "Docker Compose"
-                forcePull = true
             }
         }
     }
