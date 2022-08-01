@@ -3,6 +3,7 @@ package patches.buildTypes
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.GradleBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCompose
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
@@ -41,6 +42,12 @@ changeBuildType(RelativeId("Visual")) {
                 buildFile = "visual/build.gradle"
                 dockerImage = "selenium/standalone-chrome:latest"
                 dockerRunParameters = "-p 4445:4445 -p 4446:4446 --name visual_automation"
+            }
+        }
+        insert(3) {
+            dockerCompose {
+                name = "Docker Compose"
+                forcePull = true
             }
         }
     }
