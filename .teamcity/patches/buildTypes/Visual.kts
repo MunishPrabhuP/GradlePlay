@@ -39,6 +39,7 @@ changeBuildType(RelativeId("Visual")) {
         insert(2) {
             dockerCompose {
                 name = "Docker Compose"
+                file = "docker-compose.yml"
                 forcePull = true
             }
         }
