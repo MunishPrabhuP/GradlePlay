@@ -2,7 +2,6 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.GradleBuildStep
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCompose
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
@@ -28,18 +27,15 @@ changeBuildType(RelativeId("Visual")) {
         }
     }
     steps {
-        update<ScriptBuildStep>(0) {
-            enabled = false
-            clearConditions()
-        }
-        insert(1) {
+        insert(0) {
             dockerCompose {
                 name = "Docker Compose"
                 file = "docker-compose.yml"
                 forcePull = true
             }
         }
-        update<GradleBuildStep>(2) {
+        items.removeAt(1)
+        update<GradleBuildStep>(1) {
             name = ""
             executionMode = BuildStep.ExecutionMode.DEFAULT
             clearConditions()
