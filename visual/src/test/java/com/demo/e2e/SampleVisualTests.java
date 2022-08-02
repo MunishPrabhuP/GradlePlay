@@ -30,9 +30,9 @@ public class SampleVisualTests {
         capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
         chromeOptions.merge(capabilities);
-        hostURL = "http://localhost:4445/wd/hub";
+        hostURL = "http://localhost:4444/wd/hub";
         driver = new RemoteWebDriver(new URL(hostURL), chromeOptions);
-        driver.get("https://www.google.com/");
+        driver.get("https://accounts-staging.saas.appd-test.com/overview");
         System.out.println("Title:" + driver.getTitle());
     }
 }
