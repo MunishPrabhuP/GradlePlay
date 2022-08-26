@@ -10,7 +10,8 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.141.59'
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.1.4'
     implementation group: 'org.testng', name: 'testng', version: '7.3.0'
     implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
 }

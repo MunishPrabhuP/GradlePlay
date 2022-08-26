@@ -171,6 +171,7 @@ object E2ETests : BuildType({
     dependencies {
         snapshot(HealthCheck) {
             onDependencyFailure = FailureAction.FAIL_TO_START
+
         }
     }
     steps {
