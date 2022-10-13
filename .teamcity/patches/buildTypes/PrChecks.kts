@@ -28,7 +28,8 @@ create(DslContext.projectId, BuildType({
             buildFile = "build.gradle"
         }
         maven {
-            goals = "clean test"
+            name = "Compile Teamcity Config"
+            goals = "clean compile"
             pomLocation = ".teamcity/pom.xml"
             runnerArgs = "-Dmaven.test.failure.ignore=true"
         }
