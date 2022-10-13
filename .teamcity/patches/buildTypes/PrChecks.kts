@@ -2,6 +2,8 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.PullRequests
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
@@ -23,6 +25,7 @@ create(DslContext.projectId, BuildType({
     steps {
         gradle {
             tasks = "clean build"
+            buildFile = "build.gradle"
             gradleWrapperPath = ""
         }
         maven {
@@ -34,6 +37,17 @@ create(DslContext.projectId, BuildType({
 
     triggers {
         vcs {
+        }
+    }
+
+    features {
+        pullRequests {
+            provider = github {
+                authType = token {
+                    token = "credentialsJSON:a501b077-abfa-4103-b50a-24850da66bcc"
+                }
+                filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
+            }
         }
     }
 }))
