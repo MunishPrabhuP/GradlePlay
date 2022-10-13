@@ -6,6 +6,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.PullRequests
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.maven
+import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
 /*
@@ -32,6 +33,12 @@ create(DslContext.projectId, BuildType({
             goals = "clean compile"
             pomLocation = ".teamcity/pom.xml"
             runnerArgs = "-Dmaven.test.failure.ignore=true"
+        }
+    }
+
+    triggers {
+        vcs {
+            branchFilter = "+:pull-requests/*"
         }
     }
 
