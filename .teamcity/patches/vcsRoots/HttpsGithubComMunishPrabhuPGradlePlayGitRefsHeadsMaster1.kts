@@ -15,5 +15,6 @@ create(DslContext.projectId, GitVcsRoot({
     url = "https://github.com/MunishPrabhuP/GradlePlay.git"
     branch = "refs/heads/master"
     branchSpec = "refs/heads/*"
+    checkoutPolicy = GitVcsRoot.AgentCheckoutPolicy.USE_MIRRORS
 }))
 
