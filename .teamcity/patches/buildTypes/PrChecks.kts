@@ -23,9 +23,9 @@ create(DslContext.projectId, BuildType({
 
     steps {
         gradle {
-            tasks = "clean build"
+            name = "Compile Project"
+            tasks = "clean compileJava"
             buildFile = "build.gradle"
-            gradleWrapperPath = ""
         }
         maven {
             goals = "clean test"
