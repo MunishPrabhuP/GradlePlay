@@ -10,6 +10,16 @@ accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("Release")) {
     dependencies {
+        expect(RelativeId("E2ETests")) {
+            snapshot {
+            }
+        }
+        update(RelativeId("E2ETests")) {
+            snapshot {
+                reuseBuilds = ReuseBuilds.NO
+            }
+        }
+
         expect(RelativeId("APITests")) {
             snapshot {
             }
